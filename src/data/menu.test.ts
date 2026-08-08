@@ -53,11 +53,11 @@ describe("imported menu", () => {
         .map((item) => [item.slug, item.imageUrl]),
     );
     expect(setImages).toMatchObject({
-      "grand-tuysqan-set": "/promos/grand-tuysqan.jpeg",
-      "light-mix-set": "/promos/light-mix.jpeg",
-      "lux-set": "/promos/lux-set.jpeg",
-      "tempura-party-set": "/promos/tempura-party.jpeg",
-      "hot-mix-set": "/promos/hot-mix.jpeg",
+      "grand-tuysqan-set": "/promos/grand-tuysqan-clean-v2.jpg",
+      "light-mix-set": "/promos/light-mix-clean-v2.jpg",
+      "lux-set": "/promos/lux-set-clean-v2.jpg",
+      "tempura-party-set": "/promos/tempura-party-clean-v2.jpg",
+      "hot-mix-set": "/promos/hot-mix-clean-v2.jpg",
       "japanese-fairy-tale-set": "/promos/japanese-fairy-tale.jpeg",
     });
   });

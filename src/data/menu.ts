@@ -1427,7 +1427,7 @@ const seeds: ItemSeed[] = [
     13990,
     "40 шт: Цезарь темпура, Лосось темпура, Калифорния хот, Калифорния с крабом, Поцелуй гейши.",
     undefined,
-    "/promos/grand-tuysqan.jpeg",
+    "/promos/grand-tuysqan-clean-v2.jpg",
     { isFeatured: true, pieceCount: 40, source: "promotion_graphic" },
   ],
   [
@@ -1438,7 +1438,7 @@ const seeds: ItemSeed[] = [
     7490,
     "24 шт: Цезарь темпура, Чикен чиз хот, Калифорния хот.",
     undefined,
-    "/promos/light-mix.jpeg",
+    "/promos/light-mix-clean-v2.jpg",
     { pieceCount: 24, source: "promotion_graphic" },
   ],
   [
@@ -1449,7 +1449,7 @@ const seeds: ItemSeed[] = [
     8990,
     "24 шт: Филадельфия классик, Поцелуй гейши, Лосось темпура.",
     undefined,
-    "/promos/lux-set.jpeg",
+    "/promos/lux-set-clean-v2.jpg",
     { pieceCount: 24, source: "promotion_graphic" },
   ],
   [
@@ -1460,7 +1460,7 @@ const seeds: ItemSeed[] = [
     9900,
     "32 шт: Лосось темпура, Тунец темпура, Краб темпура, Цезарь темпура.",
     undefined,
-    "/promos/tempura-party.jpeg",
+    "/promos/tempura-party-clean-v2.jpg",
     { pieceCount: 32, source: "promotion_graphic" },
   ],
   [
@@ -1471,7 +1471,7 @@ const seeds: ItemSeed[] = [
     10990,
     "32 шт: Калифорния хот, Хот микс, Краб темпура, Чикен чиз хот.",
     undefined,
-    "/promos/hot-mix.jpeg",
+    "/promos/hot-mix-clean-v2.jpg",
     { pieceCount: 32, source: "promotion_graphic" },
   ],
   [
@@ -1571,7 +1571,7 @@ export const promotions: Promotion[] = [
     titleRu: "Бесплатная доставка от 10 000 ₸",
     titleKk: "10 000 ₸ бастап тегін жеткізу",
     descriptionRu: "Условие указано в материалах суши-сетов.",
-    imageUrl: "/promos/grand-tuysqan.jpeg",
+    imageUrl: "/promos/grand-tuysqan-clean-v2.jpg",
     isActive: true,
     status: "active",
     minimumOrder: 10000,
@@ -1583,7 +1583,7 @@ export const promotions: Promotion[] = [
     titleRu: "Подарки к сетам при доставке",
     descriptionRu:
       "Состав подарка зависит от выбранного сета: пицца, картофель фри и/или компот.",
-    imageUrl: "/promos/grand-tuysqan.jpeg",
+    imageUrl: "/promos/grand-tuysqan-clean-v2.jpg",
     isActive: false,
     status: "draft",
     type: "gift",
