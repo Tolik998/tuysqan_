@@ -37,6 +37,7 @@ const rotatedImageClasses: Record<string, string> = {
   "noodles-meatballs": "rotate-[80deg] scale-[0.86]",
   "t-bone": "rotate-[270deg] scale-[1.15]",
   "khachapuri-adjarian": "rotate-[30deg] scale-[1.5]",
+  "chicken-wings-16": "rotate-[270deg]",
 };
 
 function ProductCard({
@@ -74,6 +75,7 @@ function ProductCard({
               "object-contain p-2 transition duration-300 group-hover:opacity-90",
               enlargedImageSlugs.has(item.slug) && "scale-[1.4]",
               enlargedTwentyPercentImageSlugs.has(item.slug) && "scale-[1.2]",
+              item.categoryId === "fast-food" && "scale-[1.2]",
               rotatedImageClasses[item.slug],
             )}
           />
@@ -191,6 +193,7 @@ function ProductDialog({
                 "object-contain p-3",
                 enlargedImageSlugs.has(item.slug) && "scale-[1.4]",
                 enlargedTwentyPercentImageSlugs.has(item.slug) && "scale-[1.2]",
+                item.categoryId === "fast-food" && "scale-[1.2]",
                 rotatedImageClasses[item.slug],
               )}
               priority
