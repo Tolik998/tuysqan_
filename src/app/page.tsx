@@ -7,7 +7,10 @@ import {
   MessageCircle,
   QrCode,
 } from "lucide-react";
-import { KazakhOrnament } from "@/components/kazakh-ornament";
+import {
+  KazakhCornerOrnament,
+  KazakhOrnament,
+} from "@/components/kazakh-ornament";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { menuItems, restaurantSettings } from "@/data/menu";
@@ -86,8 +89,9 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        <section className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-10 lg:py-28">
-          <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
+        <section className="relative mx-auto max-w-[1440px] overflow-hidden px-5 py-20 sm:px-8 lg:px-10 lg:py-28">
+          <KazakhCornerOrnament />
+          <div className="relative z-10 grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
             <div>
               <p className="text-xs font-bold uppercase tracking-[.2em] text-[#020D13]/45">
                 Tuysqan · туысқан
