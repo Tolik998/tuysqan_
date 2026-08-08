@@ -62,6 +62,40 @@ describe("imported menu", () => {
     });
   });
 
+  it("uses individual generated artwork for every roll", () => {
+    const rollImages = Object.fromEntries(
+      menuItems
+        .filter((item) =>
+          ["cold-rolls", "fried-rolls", "baked-rolls"].includes(
+            item.categoryId,
+          ),
+        )
+        .map((item) => [item.slug, item.imageUrl]),
+    );
+
+    expect(rollImages).toEqual({
+      "tender-roll": "/menu-generated/sushi/tender-roll-v2.jpg",
+      "philadelphia-classic":
+        "/menu-generated/sushi/philadelphia-classic-v2.jpg",
+      "california-salmon": "/menu-generated/sushi/california-salmon-v2.jpg",
+      "california-crab": "/menu-generated/sushi/california-crab-v2.jpg",
+      alaska: "/menu-generated/sushi/alaska-v2.jpg",
+      canada: "/menu-generated/sushi/canada-v2.jpg",
+      "ebi-tempura": "/menu-generated/sushi/ebi-tempura-v2.jpg",
+      "tuna-tempura": "/menu-generated/sushi/tuna-tempura-v2.jpg",
+      "salmon-tempura": "/menu-generated/sushi/salmon-tempura-v2.jpg",
+      "caesar-tempura": "/menu-generated/sushi/caesar-tempura-v2.jpg",
+      "crab-tempura": "/menu-generated/sushi/crab-tempura-v2.jpg",
+      "kyoto-tempura": "/menu-generated/sushi/kyoto-tempura-v2.jpg",
+      "salmon-hot": "/menu-generated/sushi/salmon-hot-v2.jpg",
+      "hot-mix": "/menu-generated/sushi/hot-mix-v2.jpg",
+      "ebi-hot": "/menu-generated/sushi/ebi-hot-v2.jpg",
+      "chicken-cheese-hot": "/menu-generated/sushi/chicken-cheese-hot-v2.jpg",
+      "geisha-kiss": "/menu-generated/sushi/geisha-kiss-v2.jpg",
+      "california-hot": "/menu-generated/sushi/california-hot-v2.jpg",
+    });
+  });
+
   it("includes artwork for the requested menu positions", () => {
     const slugs = [
       "beef-ramen",

@@ -1193,7 +1193,7 @@ const seeds: ItemSeed[] = [
     3390,
     "Рис и нори, креветка и творожный сыр внутри, лосось и красная икра снаружи.",
     undefined,
-    "/promos/sushi-cold-menu.jpeg",
+    "/menu-generated/sushi/tender-roll-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1204,7 +1204,7 @@ const seeds: ItemSeed[] = [
     3490,
     "Рис и нори, творожный сыр и огурец внутри, свежий лосось снаружи.",
     undefined,
-    "/promos/sushi-cold-menu.jpeg",
+    "/menu-generated/sushi/philadelphia-classic-v2.jpg",
     { isFeatured: true, source: "sushi_graphic" },
   ],
   [
@@ -1215,7 +1215,7 @@ const seeds: ItemSeed[] = [
     2790,
     "Рис и нори, лосось и огурец внутри, икра тобико снаружи.",
     undefined,
-    "/promos/sushi-cold-menu.jpeg",
+    "/menu-generated/sushi/california-salmon-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1226,7 +1226,7 @@ const seeds: ItemSeed[] = [
     2590,
     "Рис и нори, краб и огурец внутри, икра тобико снаружи.",
     undefined,
-    "/promos/sushi-cold-menu.jpeg",
+    "/menu-generated/sushi/california-crab-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1237,7 +1237,7 @@ const seeds: ItemSeed[] = [
     2990,
     "Рис и нори, краб и огурец внутри, икра тобико снаружи.",
     undefined,
-    "/promos/sushi-cold-menu.jpeg",
+    "/menu-generated/sushi/alaska-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1248,7 +1248,7 @@ const seeds: ItemSeed[] = [
     3390,
     "Рис и нори, творожный сыр и огурец внутри, угорь и соус терияки снаружи.",
     undefined,
-    "/promos/sushi-cold-menu.jpeg",
+    "/menu-generated/sushi/canada-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1293,7 +1293,7 @@ const seeds: ItemSeed[] = [
     2890,
     "Рис и нори, креветка, огурец и творожный сыр внутри; обжаривается в темпуре.",
     undefined,
-    "/promos/sushi-hot-menu.jpeg",
+    "/menu-generated/sushi/ebi-tempura-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1304,7 +1304,7 @@ const seeds: ItemSeed[] = [
     2990,
     "Рис и нори, тунец, огурец и творожный сыр внутри; обжаривается в темпуре.",
     undefined,
-    "/promos/sushi-hot-menu.jpeg",
+    "/menu-generated/sushi/tuna-tempura-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1315,7 +1315,7 @@ const seeds: ItemSeed[] = [
     3090,
     "Рис и нори, лосось, огурец и творожный сыр внутри; обжаривается в темпуре.",
     undefined,
-    "/promos/sushi-hot-menu.jpeg",
+    "/menu-generated/sushi/salmon-tempura-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1326,7 +1326,7 @@ const seeds: ItemSeed[] = [
     2790,
     "Рис и нори, куриное филе, салат, огурец и творожный сыр внутри.",
     undefined,
-    "/promos/sushi-hot-menu.jpeg",
+    "/menu-generated/sushi/caesar-tempura-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1337,7 +1337,7 @@ const seeds: ItemSeed[] = [
     2790,
     "Рис и нори, крабовые палочки, огурец и творожный сыр внутри.",
     undefined,
-    "/promos/sushi-hot-menu.jpeg",
+    "/menu-generated/sushi/crab-tempura-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1348,7 +1348,7 @@ const seeds: ItemSeed[] = [
     3890,
     "Рис и нори, угорь, огурец и творожный сыр; сверху креветка и соус терияки.",
     undefined,
-    "/promos/sushi-hot-menu.jpeg",
+    "/menu-generated/sushi/kyoto-tempura-v2.jpg",
     { source: "sushi_graphic" },
   ],
 
@@ -1360,7 +1360,7 @@ const seeds: ItemSeed[] = [
     3490,
     "Рис и нори, лосось и творожный сыр внутри; сверху горячая лососевая шапочка.",
     undefined,
-    "/promos/sushi-hot-menu.jpeg",
+    "/menu-generated/sushi/salmon-hot-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1371,7 +1371,7 @@ const seeds: ItemSeed[] = [
     3790,
     "Рис и нори, креветка и лосось внутри; сверху горячая сочная шапочка.",
     undefined,
-    "/promos/sushi-hot-menu.jpeg",
+    "/menu-generated/sushi/hot-mix-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1382,7 +1382,7 @@ const seeds: ItemSeed[] = [
     2890,
     "Рис и нори, креветка и сырная основа внутри; сверху запечённая сырная шапочка.",
     undefined,
-    "/promos/sushi-hot-menu.jpeg",
+    "/menu-generated/sushi/ebi-hot-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1393,7 +1393,7 @@ const seeds: ItemSeed[] = [
     2890,
     "Рис и нори, куриное филе и творожный сыр внутри; сверху запечённая сырная шапочка.",
     undefined,
-    "/promos/sushi-hot-menu.jpeg",
+    "/menu-generated/sushi/chicken-cheese-hot-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1404,7 +1404,7 @@ const seeds: ItemSeed[] = [
     3890,
     "Рис и нори, лосось и творожный сыр внутри; сверху горячая запечённая шапочка.",
     undefined,
-    "/promos/sushi-hot-menu.jpeg",
+    "/menu-generated/sushi/geisha-kiss-v2.jpg",
     { source: "sushi_graphic" },
   ],
   [
@@ -1415,7 +1415,7 @@ const seeds: ItemSeed[] = [
     3090,
     "Рис и нори, краб и огурец внутри; сверху запечённый соус.",
     undefined,
-    "/promos/sushi-hot-menu.jpeg",
+    "/menu-generated/sushi/california-hot-v2.jpg",
     { source: "sushi_graphic" },
   ],
 
