@@ -99,14 +99,20 @@ describe("imported menu", () => {
     );
 
     expect(imagesBySlug["fried-lagman"]).toBe(
-      "/menu-assets/page-27-image-14.png",
+      "/menu-normalized/page-27-image-14.webp",
     );
     expect(imagesBySlug["tashkent-plov"]).toBe(
-      "/menu-assets/page-27-image-15.png",
+      "/menu-normalized/page-27-image-15.webp",
     );
     expect(imagesBySlug["tashkent-plov-company"]).toBe(
-      "/menu-assets/page-27-image-15.png",
+      "/menu-normalized/page-27-image-15.webp",
     );
+  });
+
+  it("serves normalized artwork for every PDF dish photo", () => {
+    expect(
+      menuItems.filter((item) => item.imageUrl?.startsWith("/menu-assets/")),
+    ).toHaveLength(0);
   });
 
   it("ships every referenced local image", () => {

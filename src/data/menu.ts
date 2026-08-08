@@ -402,7 +402,7 @@ const seeds: ItemSeed[] = [
     2990,
     "Японский суп с бульоном, лапшой, яйцом, грибами и говядиной.",
     "Жапондық сорпа, кеспе, жұмыртқа, саңырауқұлақтар мен сиыр еті.",
-    "/menu-generated/beef-ramen.webp",
+    "/menu-generated/beef-ramen-cutout.webp",
   ],
   [
     "soups",
@@ -412,7 +412,7 @@ const seeds: ItemSeed[] = [
     2990,
     "Сырный рамен с соусом на основе сыра чеддер.",
     "Чеддар ірімшігі негізіндегі соусы бар ірімшік рамен.",
-    "/menu-generated/cheese-ramen.webp",
+    "/menu-generated/cheese-ramen-cutout.webp",
   ],
 
   [
@@ -473,7 +473,7 @@ const seeds: ItemSeed[] = [
     3590,
     "Классический салат с соусом, пармезаном и лососем.",
     "Тұздық, пармезан және ақсерке қосылған классикалық салат.",
-    "/menu-generated/caesar-salmon.webp",
+    "/menu-generated/caesar-salmon-cutout.webp",
   ],
   [
     "salads",
@@ -483,7 +483,7 @@ const seeds: ItemSeed[] = [
     3290,
     "Классический салат с соусом, пармезаном и креветками.",
     "Тұздық, пармезан және асшаян қосылған классикалық салат.",
-    "/menu-generated/caesar-shrimp.webp",
+    "/menu-generated/caesar-shrimp-cutout.webp",
   ],
   [
     "salads",
@@ -536,7 +536,7 @@ const seeds: ItemSeed[] = [
     3290,
     "Пикантная паста с креветками в сливочном соусе.",
     "Кремді тұздықта дайындалған ащылау асшаянды паста.",
-    "/menu-generated/shrimp-cream-pasta.webp",
+    "/menu-generated/shrimp-cream-pasta-cutout.webp",
   ],
   [
     "hot-dishes",
@@ -711,7 +711,7 @@ const seeds: ItemSeed[] = [
     5990,
     "Премиальный рибай с перечным соусом, салатным миксом и BBQ.",
     "Премиум рибай, бұрышты тұздық, салат және BBQ тұздығымен.",
-    "/menu-generated/ribeye.webp",
+    "/menu-generated/ribeye-cutout.webp",
   ],
   [
     "steaks",
@@ -763,7 +763,7 @@ const seeds: ItemSeed[] = [
     2990,
     "Сливочный соус, куриная грудка, грибы и моцарелла.",
     "Кілегейлі тұздық, тауықтың төс еті, саңырауқұлақтар және моцарелла.",
-    "/menu-generated/pizza-chicken-mushrooms.webp",
+    "/menu-generated/pizza-chicken-mushrooms-cutout.webp",
   ],
   [
     "pizza",
@@ -773,7 +773,7 @@ const seeds: ItemSeed[] = [
     2590,
     "Томатный соус, моцарелла и свежие томаты.",
     "Томат тұздығы, моцарелла ірімшігі және балғын қызанақтар.",
-    "/menu-generated/margherita.webp",
+    "/menu-generated/margherita-cutout.webp",
   ],
   [
     "pizza",
@@ -906,7 +906,7 @@ const seeds: ItemSeed[] = [
     990,
     undefined,
     undefined,
-    "/menu-generated/mashed-potato.webp",
+    "/menu-generated/mashed-potato-cutout.webp",
   ],
   [
     "fast-food",
@@ -916,7 +916,7 @@ const seeds: ItemSeed[] = [
     890,
     undefined,
     undefined,
-    "/menu-generated/rice.webp",
+    "/menu-generated/rice-cutout.webp",
   ],
   [
     "fast-food",
@@ -926,7 +926,7 @@ const seeds: ItemSeed[] = [
     990,
     undefined,
     undefined,
-    "/menu-generated/potato-wedges.webp",
+    "/menu-generated/potato-wedges-cutout.webp",
   ],
 
   [
@@ -1162,7 +1162,7 @@ const seeds: ItemSeed[] = [
     2490,
     undefined,
     undefined,
-    "/menu-generated/mini-samsa-four.webp",
+    "/menu-generated/mini-samsa-four-cutout.webp",
   ],
   [
     "snacks",
@@ -1172,7 +1172,7 @@ const seeds: ItemSeed[] = [
     1990,
     undefined,
     undefined,
-    "/menu-generated/mini-chebureki-five.webp",
+    "/menu-generated/mini-chebureki-five-cutout.webp",
   ],
   [
     "snacks",
@@ -1487,6 +1487,16 @@ const seeds: ItemSeed[] = [
   ],
 ];
 
+function normalizedMenuImageUrl(imageUrl?: string) {
+  if (!imageUrl?.startsWith("/menu-assets/")) return imageUrl;
+
+  const fileName = imageUrl
+    .split("/")
+    .at(-1)
+    ?.replace(/\.png$/i, ".webp");
+  return fileName ? `/menu-normalized/${fileName}` : imageUrl;
+}
+
 export const menuItems: MenuItem[] = seeds.map((seed, index) => {
   const [
     categoryId,
@@ -1508,7 +1518,7 @@ export const menuItems: MenuItem[] = seeds.map((seed, index) => {
     descriptionRu,
     descriptionKk,
     price,
-    imageUrl,
+    imageUrl: normalizedMenuImageUrl(imageUrl),
     sortOrder: index + 1,
     isAvailable: true,
     isVisiblePublic: true,
