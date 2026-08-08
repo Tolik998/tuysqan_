@@ -20,10 +20,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { cartQuantity, cartTotal, canOrder } from "@/lib/cart";
-import { formatPrice, localize } from "@/lib/utils";
+import { cn, formatPrice, localize } from "@/lib/utils";
 import { useCartStore } from "@/store/cart-store";
 import { useLocaleStore } from "@/store/locale-store";
 import type { Category, MenuItem } from "@/types/domain";
+
+const enlargedImageSlugs = new Set(["pizza-bolognese", "khachapuri-adjarian"]);
 
 function ProductCard({
   item,
@@ -56,7 +58,10 @@ function ProductCard({
             sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 25vw"
             loading={eager ? "eager" : "lazy"}
             fetchPriority={eager ? "high" : "auto"}
-            className="object-contain p-2 transition duration-300 group-hover:opacity-90"
+            className={cn(
+              "object-contain p-2 transition duration-300 group-hover:opacity-90",
+              enlargedImageSlugs.has(item.slug) && "scale-[1.4]",
+            )}
           />
         ) : (
           <div className="absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_center,rgba(255,255,255,.08),transparent_58%)] text-xs font-bold uppercase tracking-[.25em] text-white/35">
@@ -168,7 +173,10 @@ function ProductDialog({
               alt={localize(locale, item.nameRu, item.nameKk)}
               fill
               sizes="(max-width:768px) 100vw, 50vw"
-              className="object-contain p-3"
+              className={cn(
+                "object-contain p-3",
+                enlargedImageSlugs.has(item.slug) && "scale-[1.4]",
+              )}
               priority
             />
           ) : (
