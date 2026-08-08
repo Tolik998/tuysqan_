@@ -178,7 +178,7 @@ const seeds: ItemSeed[] = [
     3290,
     "Яйца всмятку, сыр, томаты, сливочное масло, джем и свежая чиабатта.",
     "Жұмсақ піскен жұмыртқа, ірімшік, қызанақ, сары май, жеміс тосабы және жаңа піскен чиабатта.",
-    "/menu-assets/page-05-image-14.png",
+    "/menu-normalized/vienna-breakfast-v3.webp",
   ],
   [
     "breakfast",
@@ -188,7 +188,7 @@ const seeds: ItemSeed[] = [
     3290,
     "Скрэмбл, картофель, колбаски, кукуруза и свежий салат.",
     "Скрембл, картоп, шұжықтар, жүгері және балғын салат.",
-    "/menu-assets/page-05-image-15.png",
+    "/menu-normalized/tuysqan-breakfast-v3.webp",
   ],
   [
     "breakfast",
@@ -198,7 +198,7 @@ const seeds: ItemSeed[] = [
     3290,
     "Воздушный омлет с креветками, сливочным кремом, миксом салата и чиабаттой.",
     "Асшаяндар қосылған жеңіл омлет, кілегейлі крем, салат миксі және чиабатта.",
-    "/menu-assets/page-06-image-09.png",
+    "/menu-normalized/shrimp-omelette-v3.webp",
   ],
   [
     "breakfast",
@@ -896,7 +896,7 @@ const seeds: ItemSeed[] = [
     990,
     undefined,
     undefined,
-    "/menu-assets/page-25-image-06.png",
+    "/menu-normalized/french-fries-large-v3.png",
   ],
   [
     "fast-food",
