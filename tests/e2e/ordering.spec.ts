@@ -29,6 +29,9 @@ test("featured dish links open the requested menu item", async ({ page }) => {
 test("checkout validates required delivery details", async ({ page }) => {
   await addFirstProduct(page);
   await page.goto("/checkout");
+  await expect(page.getByRole("link", { name: "Оформить заказ" })).toHaveCount(
+    0,
+  );
   await page.getByRole("button", { name: /Создать заказ/ }).click();
   await expect(page.getByText("Укажите имя")).toBeVisible();
   await expect(page.getByText("Укажите адрес доставки")).toBeVisible();

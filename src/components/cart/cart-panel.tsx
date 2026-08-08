@@ -11,9 +11,11 @@ import { useCartStore } from "@/store/cart-store";
 export function CartPanel({
   compact = false,
   checkoutHref = "/checkout",
+  showCheckoutAction = true,
 }: {
   compact?: boolean;
   checkoutHref?: string;
+  showCheckoutAction?: boolean;
 }) {
   const { lines, add, decrease, remove, clear } = useCartStore();
   const total = cartTotal(lines);
@@ -106,12 +108,14 @@ export function CartPanel({
           <span>Блюд: {cartQuantity(lines)}</span>
           <strong className="text-xl">{formatPrice(total)}</strong>
         </div>
-        <Link
-          href={checkoutHref}
-          className="mt-4 flex min-h-13 items-center justify-center rounded-md bg-[#020D13] px-5 text-base font-bold text-white"
-        >
-          Оформить заказ
-        </Link>
+        {showCheckoutAction && (
+          <Link
+            href={checkoutHref}
+            className="mt-4 flex min-h-13 items-center justify-center rounded-md bg-[#020D13] px-5 text-base font-bold text-white"
+          >
+            Оформить заказ
+          </Link>
+        )}
         {!compact && (
           <Button variant="ghost" className="mt-2 w-full" onClick={clear}>
             Очистить корзину

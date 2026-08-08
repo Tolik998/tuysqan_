@@ -164,7 +164,7 @@ export function DeliveryCheckout() {
       </section>
       <aside className="lg:sticky lg:top-24 lg:self-start">
         <h2 className="mb-4 text-xl font-bold">Ваш заказ</h2>
-        <CartPanel compact />
+        <CartPanel compact showCheckoutAction={false} />
       </aside>
     </div>
   );
