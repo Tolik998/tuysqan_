@@ -55,7 +55,7 @@ export function CartPanel({
                   alt=""
                   fill
                   sizes="64px"
-                  className="object-cover"
+                  className="object-contain p-1"
                 />
               ) : (
                 <div className="grid h-full place-items-center text-xl text-white/40">

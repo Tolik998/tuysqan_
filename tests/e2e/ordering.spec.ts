@@ -20,7 +20,9 @@ test("adds a product to the persistent cart", async ({ page }) => {
 
 test("featured dish links open the requested menu item", async ({ page }) => {
   await page.goto("/menu?dish=oatmeal-apple-caramel");
-  await expect(page.getByRole("dialog")).toBeVisible();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator("img")).toHaveClass(/object-contain/);
   await expect(
     page.getByRole("heading", { name: "Овсянка с яблоком и карамелью" }),
   ).toBeVisible();

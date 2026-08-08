@@ -219,7 +219,7 @@ export function MenuAdmin({
                           alt=""
                           fill
                           sizes="48px"
-                          className="object-cover"
+                          className="object-contain p-1"
                         />
                       )}
                     </div>
@@ -360,7 +360,7 @@ export function MenuAdmin({
                           alt=""
                           fill
                           sizes="80px"
-                          className="object-cover"
+                          className="object-contain p-1"
                         />
                       </div>
                     )}

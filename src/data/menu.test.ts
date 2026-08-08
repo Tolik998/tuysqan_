@@ -46,6 +46,22 @@ describe("imported menu", () => {
     }
   });
 
+  it("uses the matching source artwork for every sushi set", () => {
+    const setImages = Object.fromEntries(
+      menuItems
+        .filter((item) => item.categoryId === "sushi-sets")
+        .map((item) => [item.slug, item.imageUrl]),
+    );
+    expect(setImages).toMatchObject({
+      "grand-tuysqan-set": "/promos/grand-tuysqan.jpeg",
+      "light-mix-set": "/promos/light-mix.jpeg",
+      "lux-set": "/promos/lux-set.jpeg",
+      "tempura-party-set": "/promos/tempura-party.jpeg",
+      "hot-mix-set": "/promos/hot-mix.jpeg",
+      "japanese-fairy-tale-set": "/promos/japanese-fairy-tale.jpeg",
+    });
+  });
+
   it("ships every referenced local image", () => {
     const imageUrls = [
       ...menuItems.map((item) => item.imageUrl),

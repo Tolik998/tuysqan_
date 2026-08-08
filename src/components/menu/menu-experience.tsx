@@ -56,7 +56,7 @@ function ProductCard({
             sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 25vw"
             loading={eager ? "eager" : "lazy"}
             fetchPriority={eager ? "high" : "auto"}
-            className="object-cover transition duration-500 group-hover:scale-[1.03]"
+            className="object-contain p-2 transition duration-300 group-hover:opacity-90"
           />
         ) : (
           <div className="absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_center,rgba(255,255,255,.08),transparent_58%)] text-xs font-bold uppercase tracking-[.25em] text-white/35">
@@ -168,7 +168,7 @@ function ProductDialog({
               alt={localize(locale, item.nameRu, item.nameKk)}
               fill
               sizes="(max-width:768px) 100vw, 50vw"
-              className="object-cover"
+              className="object-contain p-3"
               priority
             />
           ) : (

@@ -137,7 +137,7 @@ export default function HomePage() {
                         alt={item.nameRu}
                         fill
                         sizes="(max-width:768px) 50vw, 25vw"
-                        className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                        className="object-contain p-2 transition duration-300 group-hover:opacity-90"
                       />
                     )}
                   </div>

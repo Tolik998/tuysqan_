@@ -1356,7 +1356,7 @@ const seeds: ItemSeed[] = [
     8990,
     "24 шт: Филадельфия классик, Поцелуй гейши, Лосось темпура.",
     undefined,
-    "/promos/grand-tuysqan.jpeg",
+    "/promos/lux-set.jpeg",
     { pieceCount: 24, source: "promotion_graphic" },
   ],
   [
@@ -1367,7 +1367,7 @@ const seeds: ItemSeed[] = [
     9900,
     "32 шт: Лосось темпура, Тунец темпура, Краб темпура, Цезарь темпура.",
     undefined,
-    "/promos/grand-tuysqan.jpeg",
+    "/promos/tempura-party.jpeg",
     { pieceCount: 32, source: "promotion_graphic" },
   ],
   [
@@ -1378,7 +1378,7 @@ const seeds: ItemSeed[] = [
     10990,
     "32 шт: Калифорния хот, Хот микс, Краб темпура, Чикен чиз хот.",
     undefined,
-    "/promos/grand-tuysqan.jpeg",
+    "/promos/hot-mix.jpeg",
     { pieceCount: 32, source: "promotion_graphic" },
   ],
   [
