@@ -37,6 +37,7 @@ const rotatedImageClasses: Record<string, string> = {
   "noodles-meatballs": "rotate-[80deg] scale-[0.86]",
   "t-bone": "rotate-[270deg] scale-[1.15]",
   "khachapuri-adjarian": "rotate-[30deg] scale-[1.5]",
+  "chicken-wings-8": "rotate-[270deg]",
   "chicken-wings-16": "rotate-[270deg]",
 };
 
