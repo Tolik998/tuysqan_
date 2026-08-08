@@ -25,7 +25,7 @@ import { useCartStore } from "@/store/cart-store";
 import { useLocaleStore } from "@/store/locale-store";
 import type { Category, MenuItem } from "@/types/domain";
 
-const enlargedImageSlugs = new Set(["pizza-bolognese", "khachapuri-adjarian"]);
+const enlargedImageSlugs = new Set(["pizza-bolognese"]);
 const enlargedTwentyPercentImageSlugs = new Set([
   "pepperoni",
   "pizza-kazy",
@@ -36,6 +36,7 @@ const enlargedTwentyPercentImageSlugs = new Set([
 const rotatedImageClasses: Record<string, string> = {
   "noodles-meatballs": "rotate-[80deg] scale-[0.86]",
   "t-bone": "rotate-[270deg] scale-[1.15]",
+  "khachapuri-adjarian": "rotate-[30deg] scale-[1.5]",
 };
 
 function ProductCard({
