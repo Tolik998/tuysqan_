@@ -77,7 +77,7 @@ function ProductCard({
               enlargedImageSlugs.has(item.slug) && "scale-[1.4]",
               enlargedTwentyPercentImageSlugs.has(item.slug) && "scale-[1.2]",
               item.categoryId === "fast-food" && "scale-[1.2]",
-              item.categoryId === "shashlik" && "rotate-[120deg] scale-[1.2]",
+              item.categoryId === "shashlik" && "rotate-[95deg] scale-[1.44]",
               rotatedImageClasses[item.slug],
             )}
           />
@@ -196,7 +196,7 @@ function ProductDialog({
                 enlargedImageSlugs.has(item.slug) && "scale-[1.4]",
                 enlargedTwentyPercentImageSlugs.has(item.slug) && "scale-[1.2]",
                 item.categoryId === "fast-food" && "scale-[1.2]",
-                item.categoryId === "shashlik" && "rotate-[120deg] scale-[1.2]",
+                item.categoryId === "shashlik" && "rotate-[95deg] scale-[1.44]",
                 rotatedImageClasses[item.slug],
               )}
               priority
