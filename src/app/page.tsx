@@ -89,9 +89,9 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        <section className="relative mx-auto max-w-[1440px] overflow-hidden px-5 py-20 sm:px-8 lg:px-10 lg:py-28">
+        <section className="relative overflow-hidden">
           <KazakhCornerOrnament />
-          <div className="relative z-10 grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
+          <div className="relative z-10 mx-auto grid max-w-[1440px] gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[.8fr_1.2fr] lg:px-10 lg:py-28">
             <div>
               <p className="text-xs font-bold uppercase tracking-[.2em] text-[#020D13]/45">
                 Tuysqan · туысқан
