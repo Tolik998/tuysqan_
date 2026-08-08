@@ -26,7 +26,10 @@ import { useLocaleStore } from "@/store/locale-store";
 import type { Category, MenuItem } from "@/types/domain";
 
 const enlargedImageSlugs = new Set(["pizza-bolognese", "khachapuri-adjarian"]);
-const rotatedImageSlugs = new Set(["noodles-meatballs"]);
+const rotatedImageClasses: Record<string, string> = {
+  "noodles-meatballs": "rotate-[80deg] scale-[0.86]",
+  "t-bone": "rotate-[270deg] scale-[0.86]",
+};
 
 function ProductCard({
   item,
@@ -62,7 +65,7 @@ function ProductCard({
             className={cn(
               "object-contain p-2 transition duration-300 group-hover:opacity-90",
               enlargedImageSlugs.has(item.slug) && "scale-[1.4]",
-              rotatedImageSlugs.has(item.slug) && "rotate-[80deg] scale-[0.86]",
+              rotatedImageClasses[item.slug],
             )}
           />
         ) : (
@@ -178,8 +181,7 @@ function ProductDialog({
               className={cn(
                 "object-contain p-3",
                 enlargedImageSlugs.has(item.slug) && "scale-[1.4]",
-                rotatedImageSlugs.has(item.slug) &&
-                  "rotate-[80deg] scale-[0.86]",
+                rotatedImageClasses[item.slug],
               )}
               priority
             />
