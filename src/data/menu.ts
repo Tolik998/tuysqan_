@@ -360,7 +360,7 @@ const seeds: ItemSeed[] = [
     2990,
     "Лосось, овощи, бульон.",
     "Ақсерке, көкөністер, сорпа.",
-    "/menu-assets/page-11-image-02.png",
+    "/menu-generated/royal-fish-soup-v2.png",
     { isFeatured: true },
   ],
   [
