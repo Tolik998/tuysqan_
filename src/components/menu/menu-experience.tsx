@@ -39,6 +39,8 @@ const rotatedImageClasses: Record<string, string> = {
   "khachapuri-adjarian": "rotate-[30deg] scale-[1.5]",
   "chicken-wings-8": "rotate-[270deg]",
   "chicken-wings-16": "rotate-[270deg]",
+  "fried-lagman": "rotate-[270deg]",
+  "guyru-lagman": "rotate-[270deg]",
 };
 
 function ProductCard({
@@ -79,6 +81,7 @@ function ProductCard({
               item.categoryId === "fast-food" && "scale-[1.2]",
               item.categoryId === "shashlik" && "rotate-[95deg] scale-[1.44]",
               item.categoryId === "company" && "scale-[1.2]",
+              item.categoryId === "eastern" && "scale-[1.2]",
               rotatedImageClasses[item.slug],
             )}
           />
@@ -199,6 +202,7 @@ function ProductDialog({
                 item.categoryId === "fast-food" && "scale-[1.2]",
                 item.categoryId === "shashlik" && "rotate-[95deg] scale-[1.44]",
                 item.categoryId === "company" && "scale-[1.2]",
+                item.categoryId === "eastern" && "scale-[1.2]",
                 rotatedImageClasses[item.slug],
               )}
               priority
