@@ -14,19 +14,24 @@ export function SettingsAdmin({
   const [data, setData] = useState(initial);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState("");
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
+    setError("");
     const response = await fetch("/api/admin/restaurant_settings", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: "default", data }),
     });
-    setSaving(false);
     if (response.ok) {
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
+    } else {
+      const result = await response.json().catch(() => null);
+      setError(result?.error || "Не удалось сохранить настройки");
     }
+    setSaving(false);
   }
   const fields = [
     ["restaurant_name", "Название"],
@@ -89,6 +94,11 @@ export function SettingsAdmin({
           Звук новых заказов
         </label>
         <div className="sm:col-span-2">
+          {error && (
+            <p className="mb-3 rounded-md bg-red-50 p-3 text-sm font-semibold text-red-800">
+              {error}
+            </p>
+          )}
           <Button type="submit" disabled={saving}>
             {saved ? <Check className="size-4" /> : <Save className="size-4" />}
             {saved

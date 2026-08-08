@@ -6,7 +6,7 @@ export default async function DineInPage({
 }: {
   searchParams: Promise<{ table?: string | string[] }>;
 }) {
-  const { categories, items } = await getMenuData();
+  const { categories, items } = await getMenuData("dine_in");
   const params = await searchParams;
   const table = Array.isArray(params.table) ? params.table[0] : params.table;
 

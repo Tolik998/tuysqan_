@@ -54,8 +54,7 @@ describe("imported menu", () => {
     );
     expect(setImages).toMatchObject({
       "tashkent-set": "/promos/tashkent-set-card.webp",
-      "eastern-fairy-tale-set":
-        "/promos/eastern-fairy-tale-set-card.webp",
+      "eastern-fairy-tale-set": "/promos/eastern-fairy-tale-set-card.webp",
       "grand-tuysqan-set": "/promos/grand-tuysqan-clean-v2.jpg",
       "light-mix-set": "/promos/light-mix-clean-v2.jpg",
       "lux-set": "/promos/lux-set-clean-v2.jpg",

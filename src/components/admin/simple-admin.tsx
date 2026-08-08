@@ -34,6 +34,7 @@ export function SimpleAdmin({
   async function save() {
     if (!draft?.name) return;
     setSaving(true);
+    setError("");
     const isNew = !draft.raw._existing;
     const id = draft.id || `${kind}-${crypto.randomUUID()}`;
     const payload =
@@ -93,13 +94,18 @@ export function SimpleAdmin({
   }
   async function archive(id: string) {
     if (!confirm("Архивировать запись?")) return;
+    setError("");
     const response = await fetch(`/api/admin/${resource}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
     });
-    if (response.ok)
+    if (response.ok) {
       setRows((current) => current.filter((row) => row.id !== id));
+      return;
+    }
+    const result = await response.json().catch(() => ({}));
+    setError(result.error || "Не удалось архивировать запись");
   }
   async function uploadPromotionImage(file: File) {
     if (!draft) return;
@@ -145,6 +151,11 @@ export function SimpleAdmin({
           </Button>
         }
       />
+      {!draft && error && (
+        <p className="mb-5 rounded-md bg-red-50 p-3 text-sm font-semibold text-red-800">
+          {error}
+        </p>
+      )}
       <div className="grid gap-3">
         {rows.map((row) => (
           <div
@@ -175,12 +186,14 @@ export function SimpleAdmin({
                   setDraft({ ...row, raw: { ...row.raw, _existing: true } })
                 }
                 className="grid size-10 place-items-center"
+                aria-label={`Редактировать ${row.name}`}
               >
                 <Pencil className="size-4" />
               </button>
               <button
                 onClick={() => archive(row.id)}
                 className="grid size-10 place-items-center text-red-700"
+                aria-label={`Архивировать ${row.name}`}
               >
                 <Archive className="size-4" />
               </button>

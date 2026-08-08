@@ -9,42 +9,51 @@ import {
 import { createClient } from "@/lib/supabase/server";
 import type { Category, MenuItem, Promotion } from "@/types/domain";
 
-export async function getMenuData(): Promise<{
-  categories: Category[];
-  items: MenuItem[];
-}> {
-  const supabase = await createClient();
-  if (!supabase)
-    return { categories: fallbackCategories, items: fallbackItems };
-  const [categoryResult, itemResult] = await Promise.all([
-    supabase
-      .from("categories")
-      .select("*")
-      .eq("is_archived", false)
-      .order("sort_order"),
-    supabase
-      .from("menu_items")
-      .select("*")
-      .eq("is_archived", false)
-      .order("sort_order"),
-  ]);
-  if (
-    categoryResult.error ||
-    itemResult.error ||
-    !categoryResult.data?.length ||
-    !itemResult.data?.length
-  )
-    return { categories: fallbackCategories, items: fallbackItems };
-  const categories = categoryResult.data.map((row) => ({
+type CategoryRow = {
+  id: string;
+  slug: string;
+  name_ru: string;
+  name_kk: string | null;
+  sort_order: number;
+  is_visible: boolean;
+};
+
+type MenuRow = {
+  id: string;
+  category_id: string;
+  slug: string;
+  name_ru: string;
+  name_kk: string | null;
+  description_ru: string | null;
+  description_kk: string | null;
+  price: number;
+  image_url: string | null;
+  sort_order: number;
+  is_available: boolean;
+  is_visible_public: boolean;
+  is_visible_dine_in: boolean;
+  is_featured: boolean;
+  is_spicy: boolean;
+  is_new: boolean;
+  is_archived: boolean;
+  needs_review: boolean;
+  piece_count: number | null;
+  source: MenuItem["source"];
+};
+
+export function mapCategoryRow(row: CategoryRow): Category {
+  return {
     id: row.id,
     slug: row.slug,
     nameRu: row.name_ru,
     nameKk: row.name_kk || "",
     sortOrder: row.sort_order,
     isVisible: row.is_visible,
-  }));
-  const visibleCategoryIds = new Set(categories.map((category) => category.id));
-  const items = itemResult.data.map((row) => ({
+  };
+}
+
+export function mapMenuRow(row: MenuRow): MenuItem {
+  return {
     id: row.id,
     categoryId: row.category_id,
     slug: row.slug,
@@ -65,7 +74,43 @@ export async function getMenuData(): Promise<{
     needsReview: row.needs_review,
     pieceCount: row.piece_count || undefined,
     source: row.source,
-  })) as MenuItem[];
+  };
+}
+
+export async function getMenuData(
+  mode: "public" | "dine_in" = "public",
+): Promise<{
+  categories: Category[];
+  items: MenuItem[];
+}> {
+  const supabase = await createClient();
+  if (!supabase)
+    return { categories: fallbackCategories, items: fallbackItems };
+  const visibilityField =
+    mode === "dine_in" ? "is_visible_dine_in" : "is_visible_public";
+  const [categoryResult, itemResult] = await Promise.all([
+    supabase
+      .from("categories")
+      .select("*")
+      .eq("is_archived", false)
+      .order("sort_order"),
+    supabase
+      .from("menu_items")
+      .select("*")
+      .eq("is_archived", false)
+      .eq(visibilityField, true)
+      .order("sort_order"),
+  ]);
+  if (
+    categoryResult.error ||
+    itemResult.error ||
+    !categoryResult.data?.length ||
+    !itemResult.data?.length
+  )
+    return { categories: fallbackCategories, items: fallbackItems };
+  const categories = (categoryResult.data as CategoryRow[]).map(mapCategoryRow);
+  const visibleCategoryIds = new Set(categories.map((category) => category.id));
+  const items = (itemResult.data as MenuRow[]).map(mapMenuRow);
 
   return {
     categories,

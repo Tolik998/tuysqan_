@@ -107,6 +107,7 @@ export function MenuAdmin({
     item: MenuItem,
     key: "is_available" | "is_visible_public" | "is_visible_dine_in",
   ) {
+    setError("");
     const value =
       key === "is_available"
         ? !item.isAvailable
@@ -118,7 +119,7 @@ export function MenuAdmin({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: item.id, data: { [key]: value } }),
     });
-    if (response.ok)
+    if (response.ok) {
       setItems((current) =>
         current.map((entry) =>
           entry.id === item.id
@@ -133,16 +134,25 @@ export function MenuAdmin({
             : entry,
         ),
       );
+      return;
+    }
+    const result = await response.json().catch(() => ({}));
+    setError(result.error || "Не удалось изменить видимость блюда");
   }
   async function archive(id: string) {
     if (!confirm("Архивировать блюдо?")) return;
+    setError("");
     const response = await fetch("/api/admin/menu_items", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
     });
-    if (response.ok)
+    if (response.ok) {
       setItems((current) => current.filter((item) => item.id !== id));
+      return;
+    }
+    const result = await response.json().catch(() => ({}));
+    setError(result.error || "Не удалось архивировать блюдо");
   }
   async function upload(file: File) {
     setSaving(true);
@@ -177,6 +187,11 @@ export function MenuAdmin({
           </Button>
         }
       />
+      {!draft && error && (
+        <p className="mb-5 rounded-md bg-red-50 p-3 text-sm font-semibold text-red-800">
+          {error}
+        </p>
+      )}
       <div className="mb-5 flex flex-col gap-3 sm:flex-row">
         <label className="relative flex-1">
           <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-[#020D13]/40" />

@@ -34,7 +34,12 @@ export function LoginForm() {
       setLoading(false);
       return;
     }
-    router.replace(search.get("returnTo") || "/admin");
+    const requestedPath = search.get("returnTo");
+    const returnTo =
+      requestedPath?.startsWith("/admin") && !requestedPath.startsWith("//")
+        ? requestedPath
+        : "/admin";
+    router.replace(returnTo);
     router.refresh();
   }
   return (

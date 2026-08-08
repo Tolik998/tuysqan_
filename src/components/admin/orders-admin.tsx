@@ -45,6 +45,7 @@ const labels: Record<string, string> = {
 export function OrdersAdmin({ initialOrders }: { initialOrders: Order[] }) {
   const [orders, setOrders] = useState(initialOrders);
   const [tab, setTab] = useState<string>("new");
+  const [error, setError] = useState("");
   useEffect(() => {
     const client = createClient();
     if (!client) return;
@@ -70,17 +71,22 @@ export function OrdersAdmin({ initialOrders }: { initialOrders: Order[] }) {
     [orders, tab],
   );
   async function update(id: string, status: string) {
+    setError("");
     const response = await fetch("/api/admin/orders", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, data: { status } }),
     });
-    if (response.ok)
+    if (response.ok) {
       setOrders((current) =>
         current.map((order) =>
           order.id === id ? { ...order, status } : order,
         ),
       );
+      return;
+    }
+    const result = await response.json().catch(() => ({}));
+    setError(result.error || "Не удалось изменить статус заказа");
   }
   return (
     <div>
@@ -88,6 +94,11 @@ export function OrdersAdmin({ initialOrders }: { initialOrders: Order[] }) {
         title="Заказы"
         subtitle="Доставка и заказы из QR-меню обновляются в реальном времени"
       />
+      {error && (
+        <p className="mb-5 rounded-md bg-red-50 p-3 text-sm font-semibold text-red-800">
+          {error}
+        </p>
+      )}
       <div className="mb-6 flex gap-2 overflow-x-auto">
         {tabs.map((value) => (
           <button

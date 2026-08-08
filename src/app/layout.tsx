@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Montserrat } from "next/font/google";
+import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -9,9 +10,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-  ),
+  metadataBase: new URL(getSiteUrl()),
   title: {
     default: "Tuysqan — кафе в Макинске | Меню и заказ еды",
     template: "%s | Tuysqan",
@@ -19,6 +18,7 @@ export const metadata: Metadata = {
   description:
     "Tuysqan в Макинске: казахские традиции, современный стиль, меню и заказ доставки через WhatsApp.",
   applicationName: "Tuysqan",
+  alternates: { canonical: "/" },
   manifest: "/manifest.webmanifest",
   icons: { icon: "/icon.png", apple: "/icon.png" },
   openGraph: {

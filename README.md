@@ -31,7 +31,7 @@ Production-oriented Next.js application for Tuysqan in Makinsk, Kazakhstan. One 
 
 2. Copy `.env.example` to `.env.local` and provide the Supabase project URL, anon key, and service-role key. The service-role key is server-only and must never use a `NEXT_PUBLIC_` prefix.
 
-3. In Supabase SQL Editor, run `supabase/migrations/202608080001_initial.sql` once. If using the Supabase CLI, link the project and run `supabase db push`.
+3. Apply every file in `supabase/migrations` in filename order. If using the Supabase CLI, link the project and run `supabase db push`.
 
 4. Seed the real Tuysqan menu:
 
@@ -116,6 +116,8 @@ The first Playwright run may require `npx playwright install chromium`.
 4. Deploy.
 5. In Supabase Authentication URL Configuration, add the production origin and `/admin/login` redirect URL.
 6. Re-generate printable QR codes from the production admin panel.
+
+See `DEPLOYMENT.md` for the complete domain, Supabase Auth, DNS, HTTPS, migration, and release checklist. Security assumptions and operational limits are documented in `SECURITY.md`.
 
 ## Operational notes
 

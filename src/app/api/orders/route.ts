@@ -1,4 +1,11 @@
 import { NextResponse } from "next/server";
+import {
+  clientIp,
+  consumeRateLimit,
+  exceedsBodyLimit,
+  isTrustedMutation,
+  noStoreHeaders,
+} from "@/lib/request-security";
 import { dineInOrderSchema, deliveryOrderSchema } from "@/lib/validation";
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -9,6 +16,31 @@ type MenuRow = {
 };
 
 export async function POST(request: Request) {
+  if (!isTrustedMutation(request))
+    return NextResponse.json(
+      { error: "Запрос отклонён" },
+      { status: 403, headers: noStoreHeaders() },
+    );
+  if (exceedsBodyLimit(request, 100_000))
+    return NextResponse.json(
+      { error: "Запрос слишком большой" },
+      { status: 413, headers: noStoreHeaders() },
+    );
+  const rateLimit = consumeRateLimit(
+    `orders:${clientIp(request)}`,
+    8,
+    10 * 60_000,
+  );
+  if (!rateLimit.allowed)
+    return NextResponse.json(
+      { error: "Слишком много заказов. Попробуйте немного позже." },
+      {
+        status: 429,
+        headers: noStoreHeaders({
+          "Retry-After": String(rateLimit.retryAfterSeconds),
+        }),
+      },
+    );
   try {
     const body = await request.json();
     const type = body.orderType === "dine_in" ? "dine_in" : "delivery";
@@ -121,17 +153,20 @@ export async function POST(request: Request) {
       await supabase.from("orders").delete().eq("id", orderInsert.data.id);
       throw itemsInsert.error;
     }
-    return NextResponse.json({
-      id: orderInsert.data.id,
-      orderNumber,
-      publicToken,
-      total,
-    });
+    return NextResponse.json(
+      {
+        id: orderInsert.data.id,
+        orderNumber,
+        publicToken,
+        total,
+      },
+      { headers: noStoreHeaders() },
+    );
   } catch (error) {
     console.error("Order creation failed", error);
     return NextResponse.json(
       { error: "Не удалось отправить заказ. Попробуйте ещё раз." },
-      { status: 500 },
+      { status: 500, headers: noStoreHeaders() },
     );
   }
 }
