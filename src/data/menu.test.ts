@@ -6,8 +6,8 @@ import { categories, menuItems, promotions, setItems } from "@/data/menu";
 describe("imported menu", () => {
   it("contains the complete PDF and sushi catalogue", () => {
     expect(categories).toHaveLength(18);
-    expect(menuItems).toHaveLength(137);
-    expect(setItems).toHaveLength(25);
+    expect(menuItems).toHaveLength(139);
+    expect(setItems).toHaveLength(32);
   });
 
   it("has unique identifiers and slugs", () => {
@@ -32,7 +32,7 @@ describe("imported menu", () => {
     }
   });
 
-  it("references valid items from every sushi set", () => {
+  it("references valid items from every set", () => {
     const itemSlugs = new Set(menuItems.map((item) => item.slug));
     const setSlugs = new Set(
       menuItems
@@ -46,13 +46,16 @@ describe("imported menu", () => {
     }
   });
 
-  it("uses the matching source artwork for every sushi set", () => {
+  it("uses the matching source artwork for every set", () => {
     const setImages = Object.fromEntries(
       menuItems
         .filter((item) => item.categoryId === "sushi-sets")
         .map((item) => [item.slug, item.imageUrl]),
     );
     expect(setImages).toMatchObject({
+      "tashkent-set": "/promos/tashkent-set-card.webp",
+      "eastern-fairy-tale-set":
+        "/promos/eastern-fairy-tale-set-card.webp",
       "grand-tuysqan-set": "/promos/grand-tuysqan-clean-v2.jpg",
       "light-mix-set": "/promos/light-mix-clean-v2.jpg",
       "lux-set": "/promos/lux-set-clean-v2.jpg",

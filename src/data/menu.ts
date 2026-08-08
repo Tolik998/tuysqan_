@@ -29,7 +29,7 @@ export const categories: Category[] = [
   ["cold-rolls", "cold-rolls", "Холодные роллы", "Салқын роллдар"],
   ["fried-rolls", "fried-rolls", "Жареные роллы", "Қуырылған роллдар"],
   ["baked-rolls", "baked-rolls", "Запечённые роллы", "Пісірілген роллдар"],
-  ["sushi-sets", "sushi-sets", "Суши-сеты", "Суши сеттері"],
+  ["sushi-sets", "sushi-sets", "Сеты", "Сеттер"],
 ].map(([id, slug, nameRu, nameKk], index) => ({
   id,
   slug,
@@ -1421,6 +1421,28 @@ const seeds: ItemSeed[] = [
 
   [
     "sushi-sets",
+    "tashkent-set",
+    "Сет «Ташкент»",
+    "«Ташкент» сеті",
+    5990,
+    "На 2–3 человека: ташкентский плов 1 кг, мини-люля 2 шт, лепёшка 2 шт, красный соус 1 шт.",
+    "2–3 адамға: Ташкент палауы 1 кг, мини-люля 2 дана, нан 2 дана, қызыл соус 1 дана.",
+    "/promos/tashkent-set-card.webp",
+    { source: "promotion_graphic" },
+  ],
+  [
+    "sushi-sets",
+    "eastern-fairy-tale-set",
+    "Сет «Восточная сказка»",
+    "«Шығыс ертегісі» сеті",
+    16990,
+    "На 6–7 человек: ташкентский плов 2 кг, мини-люля 4 шт, манты с рубленой говядиной 10 шт, лепёшка 4 шт, красный соус 1 шт и сметана 1 шт.",
+    "6–7 адамға: Ташкент палауы 2 кг, мини-люля 4 дана, туралған сиыр еті қосылған мәнті 10 дана, нан 4 дана, қызыл соус 1 дана және қаймақ 1 дана.",
+    "/promos/eastern-fairy-tale-set-card.webp",
+    { source: "promotion_graphic" },
+  ],
+  [
+    "sushi-sets",
     "grand-tuysqan-set",
     "Сет «Гранд TUYSQAN»",
     "«Гранд TUYSQAN» сеті",
@@ -1534,6 +1556,13 @@ export const menuItems: MenuItem[] = seeds.map((seed, index) => {
 });
 
 export const setItems: SetItem[] = [
+  ["tashkent-set", "tashkent-plov", 1],
+  ["tashkent-set", "lula-kebab", 2],
+  ["tashkent-set", "flatbread", 2],
+  ["eastern-fairy-tale-set", "tashkent-plov", 2],
+  ["eastern-fairy-tale-set", "lula-kebab", 4],
+  ["eastern-fairy-tale-set", "manty-five", 2],
+  ["eastern-fairy-tale-set", "flatbread", 4],
   ["grand-tuysqan-set", "caesar-tempura", 1],
   ["grand-tuysqan-set", "salmon-tempura", 1],
   ["grand-tuysqan-set", "california-hot", 1],
