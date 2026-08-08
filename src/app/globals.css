@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+:root {
+  --snow: #fffbfc;
+  --rich-black: #020d13;
+  --warm: #e8dac4;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background: var(--snow);
+  color: var(--rich-black);
+  font-family: var(--font-montserrat), Montserrat, Arial, sans-serif;
+}
+button,
+a,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+}
+::selection {
+  background: #020d13;
+  color: #fffbfc;
+}
+.ornament-rule {
+  position: relative;
+  height: 1px;
+  background: color-mix(in srgb, var(--rich-black) 18%, transparent);
+}
+.ornament-rule::after {
+  content: "◆";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--snow);
+  padding: 0 10px;
+  font-size: 8px;
+}
+.kazakh-mark {
+  background-image:
+    radial-gradient(
+      circle at 50% 50%,
+      transparent 0 30%,
+      currentColor 31% 34%,
+      transparent 35%
+    ),
+    conic-gradient(
+      from 45deg,
+      transparent 0 12%,
+      currentColor 12% 14%,
+      transparent 14% 36%,
+      currentColor 36% 38%,
+      transparent 38% 62%,
+      currentColor 62% 64%,
+      transparent 64% 86%,
+      currentColor 86% 88%,
+      transparent 88%
+    );
+}
+@keyframes float-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.reveal {
+  animation: float-in 0.45s ease both;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
