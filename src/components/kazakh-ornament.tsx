@@ -69,7 +69,7 @@ export function KazakhOrnament() {
 export function KazakhCornerOrnament() {
   return (
     <div
-      className="pointer-events-none absolute right-6 top-0 hidden h-[340px] w-[246px] opacity-55 lg:block xl:right-10 xl:h-[390px] xl:w-[282px]"
+      className="pointer-events-none absolute right-0 top-0 hidden h-[340px] w-[246px] opacity-55 lg:block xl:h-[390px] xl:w-[282px]"
       aria-hidden="true"
     >
       <Image
