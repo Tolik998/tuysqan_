@@ -28,7 +28,7 @@ import type { Category, MenuItem } from "@/types/domain";
 const enlargedImageSlugs = new Set(["pizza-bolognese", "khachapuri-adjarian"]);
 const rotatedImageClasses: Record<string, string> = {
   "noodles-meatballs": "rotate-[80deg] scale-[0.86]",
-  "t-bone": "rotate-[270deg] scale-[0.86]",
+  "t-bone": "rotate-[270deg] scale-[1.15]",
 };
 
 function ProductCard({
