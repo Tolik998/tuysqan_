@@ -1259,7 +1259,7 @@ const seeds: ItemSeed[] = [
     3290,
     undefined,
     undefined,
-    "/promos/sushi-cold-menu.jpeg",
+    "/menu-generated/sushi/sushi-doner-v2.png",
     { source: "sushi_graphic" },
   ],
   [
@@ -1270,7 +1270,7 @@ const seeds: ItemSeed[] = [
     2890,
     undefined,
     undefined,
-    "/promos/sushi-cold-menu.jpeg",
+    "/menu-generated/sushi/sushi-doner-v2.png",
     { source: "sushi_graphic" },
   ],
   [
@@ -1281,7 +1281,7 @@ const seeds: ItemSeed[] = [
     3090,
     undefined,
     undefined,
-    "/promos/sushi-cold-menu.jpeg",
+    "/menu-generated/sushi/sushi-doner-v2.png",
     { source: "sushi_graphic" },
   ],
 

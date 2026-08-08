@@ -96,6 +96,18 @@ describe("imported menu", () => {
     });
   });
 
+  it("uses cropped artwork for every sushi doner", () => {
+    const sushiDonerImages = menuItems
+      .filter((item) => item.slug.startsWith("sushi-doner-"))
+      .map((item) => item.imageUrl);
+
+    expect(sushiDonerImages).toEqual([
+      "/menu-generated/sushi/sushi-doner-v2.png",
+      "/menu-generated/sushi/sushi-doner-v2.png",
+      "/menu-generated/sushi/sushi-doner-v2.png",
+    ]);
+  });
+
   it("includes artwork for the requested menu positions", () => {
     const slugs = [
       "beef-ramen",
