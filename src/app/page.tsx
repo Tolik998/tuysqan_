@@ -7,6 +7,7 @@ import {
   MessageCircle,
   QrCode,
 } from "lucide-react";
+import { KazakhOrnament } from "@/components/kazakh-ornament";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { menuItems, restaurantSettings } from "@/data/menu";
@@ -50,7 +51,7 @@ export default function HomePage() {
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#020D13] via-[#020D13]/75 to-transparent" />
           </div>
-          <div className="absolute -left-28 bottom-0 size-80 rounded-full border border-white/10 opacity-30 kazakh-mark" />
+          <KazakhOrnament />
           <div className="relative mx-auto flex min-h-[calc(100svh-72px)] max-w-[1440px] items-center px-5 py-16 sm:px-8 lg:px-10">
             <div className="max-w-2xl reveal">
               <div className="mb-8 flex items-center gap-3 text-xs font-bold uppercase tracking-[.22em] text-white/55">
