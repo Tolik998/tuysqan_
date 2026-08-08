@@ -20,13 +20,15 @@ describe("WhatsApp formatter", () => {
   it("includes snapshots and total", () => {
     const text = formatWhatsAppOrder(order);
     expect(text).toContain("2 × Шакшука — 4 580 ₸");
-    expect(text).toContain("TQ-20260808-001");
     expect(text).toContain("Без лука");
+    expect(text).not.toContain("Новый заказ TUYSQAN");
+    expect(text).not.toContain("TQ-20260808-001");
+    expect(text).not.toContain("Отправлено с сайта Tuysqan");
     expect(text).not.toContain("Телефон:");
   });
   it("normalizes phone and encodes the message", () => {
     const url = createWhatsAppUrl("+7 771 594 7903", order);
     expect(url.startsWith("https://wa.me/77715947903?text=")).toBe(true);
-    expect(decodeURIComponent(url)).toContain("Новый заказ TUYSQAN");
+    expect(decodeURIComponent(url)).toContain("Имя: Тлеген");
   });
 });

@@ -30,10 +30,6 @@ export function formatWhatsAppOrder(order: WhatsAppOrder) {
   );
 
   return [
-    "Новый заказ TUYSQAN",
-    "",
-    `Заказ: ${safe(order.orderNumber)}`,
-    "",
     `Имя: ${safe(order.customerName)}`,
     `Адрес: ${safe(order.deliveryAddress)}${addressDetails.length ? ` (${addressDetails.join(", ")})` : ""}`,
     "",
@@ -43,8 +39,6 @@ export function formatWhatsAppOrder(order: WhatsAppOrder) {
     `Итого: ${formatPrice(order.total)}`,
     "",
     `Комментарий: ${safe(order.comment)}`,
-    "",
-    "Отправлено с сайта Tuysqan.",
   ].join("\n");
 }
 
