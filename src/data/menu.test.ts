@@ -143,6 +143,22 @@ describe("imported menu", () => {
     );
   });
 
+  it("uses the correct shakshuka and frittata artwork", () => {
+    const imagesBySlug = Object.fromEntries(
+      menuItems.map((item) => [item.slug, item.imageUrl]),
+    );
+
+    expect(imagesBySlug["vegetable-frittata"]).toBe(
+      "/menu-normalized/page-03-image-01.webp",
+    );
+    expect(imagesBySlug["shakshuka-cheese"]).toBe(
+      "/menu-normalized/page-03-image-13.webp",
+    );
+    expect(imagesBySlug["white-shakshuka"]).toBe(
+      "/menu-normalized/page-03-image-14.webp",
+    );
+  });
+
   it("serves normalized artwork for every PDF dish photo", () => {
     expect(
       menuItems.filter((item) => item.imageUrl?.startsWith("/menu-assets/")),
