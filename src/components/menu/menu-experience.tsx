@@ -82,6 +82,7 @@ function ProductCard({
               item.categoryId === "shashlik" && "rotate-[95deg] scale-[1.44]",
               item.categoryId === "company" && "scale-[1.2]",
               item.categoryId === "eastern" && "scale-[1.2]",
+              item.categoryId === "snacks" && "scale-[1.2]",
               rotatedImageClasses[item.slug],
             )}
           />
@@ -203,6 +204,7 @@ function ProductDialog({
                 item.categoryId === "shashlik" && "rotate-[95deg] scale-[1.44]",
                 item.categoryId === "company" && "scale-[1.2]",
                 item.categoryId === "eastern" && "scale-[1.2]",
+                item.categoryId === "snacks" && "scale-[1.2]",
                 rotatedImageClasses[item.slug],
               )}
               priority
