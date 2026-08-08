@@ -62,6 +62,53 @@ describe("imported menu", () => {
     });
   });
 
+  it("includes artwork for the requested menu positions", () => {
+    const slugs = [
+      "beef-ramen",
+      "cheese-ramen",
+      "caesar-salmon",
+      "caesar-shrimp",
+      "shrimp-cream-pasta",
+      "ribeye",
+      "pizza-chicken-mushrooms",
+      "margherita",
+      "pizza-kazy",
+      "mashed-potato-side",
+      "rice-side",
+      "potato-wedges-side",
+      "lula-kebab",
+      "duck-shashlik",
+      "leg-shashlik",
+      "wings-shashlik",
+      "entrecote-shashlik",
+      "lamb-shashlik",
+      "tashkent-plov-company",
+      "mini-samsa-four",
+      "mini-chebureki-five",
+    ];
+    const itemsBySlug = new Map(menuItems.map((item) => [item.slug, item]));
+
+    for (const slug of slugs) {
+      expect(itemsBySlug.get(slug)?.imageUrl, slug).toBeTruthy();
+    }
+  });
+
+  it("uses the correct eastern dish artwork", () => {
+    const imagesBySlug = Object.fromEntries(
+      menuItems.map((item) => [item.slug, item.imageUrl]),
+    );
+
+    expect(imagesBySlug["fried-lagman"]).toBe(
+      "/menu-assets/page-27-image-14.png",
+    );
+    expect(imagesBySlug["tashkent-plov"]).toBe(
+      "/menu-assets/page-27-image-15.png",
+    );
+    expect(imagesBySlug["tashkent-plov-company"]).toBe(
+      "/menu-assets/page-27-image-15.png",
+    );
+  });
+
   it("ships every referenced local image", () => {
     const imageUrls = [
       ...menuItems.map((item) => item.imageUrl),
