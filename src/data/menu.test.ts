@@ -162,7 +162,7 @@ describe("imported menu", () => {
   it("uses the rice-free artwork for royal fish soup", () => {
     expect(
       menuItems.find((item) => item.slug === "royal-fish-soup")?.imageUrl,
-    ).toBe("/menu-generated/royal-fish-soup-v2.png");
+    ).toBe("/menu-generated/royal-fish-soup-transparent-v3.png");
   });
 
   it("serves normalized artwork for every PDF dish photo", () => {
