@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
+  Archive,
   BookOpen,
   FolderTree,
   ImageIcon,
@@ -20,6 +21,7 @@ const nav = [
   ["/admin", "Обзор", LayoutDashboard],
   ["/admin/orders", "Заказы", ShoppingBag],
   ["/admin/menu", "Меню", BookOpen],
+  ["/admin/archive", "Архив", Archive],
   ["/admin/categories", "Категории", FolderTree],
   ["/admin/tables", "Столы", Table2],
   ["/admin/promotions", "Акции", ImageIcon],

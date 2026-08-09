@@ -395,15 +395,59 @@ export async function DELETE(
         { status: 405 },
       );
     }
-    const { id } = objectBody(await request.json());
-    if (typeof id !== "string" || !id) throw new Error("id is required");
+    const body = objectBody(await request.json());
+    const id = idSchema.parse(body.id);
+    if (body.permanent === true) {
+      if (table !== "menu_items")
+        throw new Error("Постоянное удаление доступно только для блюд");
+      const existing = await admin.supabase
+        .from("menu_items")
+        .select("image_url,is_archived")
+        .eq("id", id)
+        .single();
+      if (existing.error) throw existing.error;
+      if (!existing.data.is_archived)
+        throw new Error("Сначала переместите блюдо в архив");
+      const result = await admin.supabase
+        .from("menu_items")
+        .delete()
+        .eq("id", id);
+      if (result.error?.code === "23503")
+        throw new Error(
+          "Блюдо связано с заказами или сетами. Его можно оставить в архиве, но нельзя удалить навсегда.",
+        );
+      if (result.error) throw result.error;
+      const storagePath = menuImageStoragePath(existing.data.image_url);
+      if (storagePath)
+        await admin.supabase.storage.from("menu-images").remove([storagePath]);
+      return NextResponse.json({ ok: true }, { headers: noStoreHeaders() });
+    }
     const result = await admin.supabase
       .from(table)
       .update({ is_archived: true })
       .eq("id", id);
     if (result.error) throw result.error;
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true }, { headers: noStoreHeaders() });
   } catch (error) {
     return errorResponse(error, "Ошибка удаления");
+  }
+}
+
+function menuImageStoragePath(value: unknown) {
+  if (typeof value !== "string") return null;
+  try {
+    const imageUrl = new URL(value);
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    if (!supabaseUrl || imageUrl.origin !== new URL(supabaseUrl).origin)
+      return null;
+    const marker = "/storage/v1/object/public/menu-images/";
+    const markerIndex = imageUrl.pathname.indexOf(marker);
+    return markerIndex === -1
+      ? null
+      : decodeURIComponent(
+          imageUrl.pathname.slice(markerIndex + marker.length),
+        );
+  } catch {
+    return null;
   }
 }
