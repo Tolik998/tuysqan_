@@ -83,16 +83,6 @@ export function SettingsAdmin({
             }
           />
         </label>
-        <label className="flex items-center gap-2 text-sm font-bold sm:col-span-2">
-          <input
-            type="checkbox"
-            checked={Boolean(data.notification_sound)}
-            onChange={(e) =>
-              setData({ ...data, notification_sound: e.target.checked })
-            }
-          />
-          Звук новых заказов
-        </label>
         <div className="sm:col-span-2">
           {error && (
             <p className="mb-3 rounded-md bg-red-50 p-3 text-sm font-semibold text-red-800">
