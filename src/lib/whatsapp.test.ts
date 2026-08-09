@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { createWhatsAppUrl, formatWhatsAppOrder } from "@/lib/whatsapp";
+import {
+  createDineInWhatsAppUrl,
+  createWhatsAppUrl,
+  formatWhatsAppDineInOrder,
+  formatWhatsAppOrder,
+} from "@/lib/whatsapp";
 const order = {
   orderNumber: "TQ-20260808-001",
   customerName: "Тлеген",
@@ -30,5 +35,23 @@ describe("WhatsApp formatter", () => {
     const url = createWhatsAppUrl("+7 771 594 7903", order);
     expect(url.startsWith("https://wa.me/77715947903?text=")).toBe(true);
     expect(decodeURIComponent(url)).toContain("Имя: Тлеген");
+  });
+
+  it("formats a dine-in order with its table", () => {
+    const dineInOrder = {
+      tableLabel: "7",
+      customerName: "Алия",
+      comment: "Без лука",
+      items: order.items,
+      total: order.total,
+    };
+    const text = formatWhatsAppDineInOrder(dineInOrder);
+    const url = createDineInWhatsAppUrl("+7 771 594 7903", dineInOrder);
+
+    expect(text).toContain("Стол: 7");
+    expect(text).toContain("Имя: Алия");
+    expect(text).toContain("2 × Шакшука — 4 580 ₸");
+    expect(text).toContain("Комментарий: Без лука");
+    expect(url.startsWith("https://wa.me/77715947903?text=")).toBe(true);
   });
 });

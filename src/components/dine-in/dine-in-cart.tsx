@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2, MessageCircle } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -9,13 +9,20 @@ import { CartPanel } from "@/components/cart/cart-panel";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea } from "@/components/ui/input";
 import { cartTotal, toOrderSnapshots } from "@/lib/cart";
+import { createDineInWhatsAppUrl } from "@/lib/whatsapp";
 import { dineInOrderSchema, type DineInOrderInput } from "@/lib/validation";
 import { useCartStore } from "@/store/cart-store";
 import type { RestaurantTable } from "@/types/domain";
 
 type FormValues = Omit<DineInOrderInput, "items" | "total">;
 
-export function DineInCart({ tables }: { tables: RestaurantTable[] }) {
+export function DineInCart({
+  tables,
+  whatsapp,
+}: {
+  tables: RestaurantTable[];
+  whatsapp: string;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const lines = useCartStore((state) => state.lines);
@@ -56,7 +63,17 @@ export function DineInCart({ tables }: { tables: RestaurantTable[] }) {
       const result = await response.json();
       if (!response.ok)
         throw new Error(result.error || "Не удалось создать заказ");
+      const tableLabel =
+        tables.find((table) => table.id === values.tableId)?.label || "—";
+      const whatsappUrl = createDineInWhatsAppUrl(whatsapp, {
+        tableLabel,
+        customerName: values.customerName,
+        comment: values.comment,
+        items,
+        total: result.total,
+      });
       clear();
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
       router.push(`/dine-in/order/${result.id}?token=${result.publicToken}`);
     } catch (error) {
       setServerError(
@@ -70,7 +87,7 @@ export function DineInCart({ tables }: { tables: RestaurantTable[] }) {
       <section>
         <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-800">
           <CheckCircle2 className="size-4" />
-          Заказ напрямую на кухню
+          Заказ сохраняется и отправляется в WhatsApp
         </div>
         <h1 className="text-3xl font-bold">Подтверждение заказа</h1>
         <p className="mt-3 text-sm text-[#020D13]/55">
@@ -128,7 +145,10 @@ export function DineInCart({ tables }: { tables: RestaurantTable[] }) {
             {form.formState.isSubmitting && (
               <Loader2 className="size-5 animate-spin" />
             )}
-            Отправить заказ
+            {form.formState.isSubmitting ? null : (
+              <MessageCircle className="size-5" />
+            )}
+            Создать заказ и перейти в WhatsApp
           </Button>
         </form>
       </section>

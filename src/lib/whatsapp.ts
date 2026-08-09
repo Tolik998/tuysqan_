@@ -13,6 +13,14 @@ export type WhatsAppOrder = {
   total: number;
 };
 
+export type WhatsAppDineInOrder = {
+  tableLabel: string;
+  customerName?: string;
+  comment?: string;
+  items: OrderSnapshotItem[];
+  total: number;
+};
+
 function safe(value?: string) {
   return (value || "—").replace(/[\u0000-\u001f]/g, " ").trim();
 }
@@ -45,4 +53,31 @@ export function formatWhatsAppOrder(order: WhatsAppOrder) {
 export function createWhatsAppUrl(phone: string, order: WhatsAppOrder) {
   const normalizedPhone = phone.replace(/\D/g, "");
   return `https://wa.me/${normalizedPhone}?text=${encodeURIComponent(formatWhatsAppOrder(order))}`;
+}
+
+export function formatWhatsAppDineInOrder(order: WhatsAppDineInOrder) {
+  const itemLines = order.items.map(
+    (item) =>
+      `${item.quantity} × ${safe(item.itemNameSnapshot)} — ${formatPrice(item.lineTotal)}`,
+  );
+
+  return [
+    `Стол: ${safe(order.tableLabel)}`,
+    `Имя: ${safe(order.customerName)}`,
+    "",
+    "Заказ:",
+    ...itemLines,
+    "",
+    `Итого: ${formatPrice(order.total)}`,
+    "",
+    `Комментарий: ${safe(order.comment)}`,
+  ].join("\n");
+}
+
+export function createDineInWhatsAppUrl(
+  phone: string,
+  order: WhatsAppDineInOrder,
+) {
+  const normalizedPhone = phone.replace(/\D/g, "");
+  return `https://wa.me/${normalizedPhone}?text=${encodeURIComponent(formatWhatsAppDineInOrder(order))}`;
 }

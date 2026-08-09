@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { DineInCart } from "@/components/dine-in/dine-in-cart";
 import { defaultTables } from "@/data/menu";
+import { getRestaurantSettings } from "@/lib/data";
 import { createClient } from "@/lib/supabase/server";
 
 async function tables() {
@@ -20,10 +21,15 @@ async function tables() {
   }));
 }
 export default async function DineInCartPage() {
+  const [restaurantTables, settings] = await Promise.all([
+    tables(),
+    getRestaurantSettings(),
+  ]);
+
   return (
     <main className="mx-auto max-w-[1200px] px-4 py-8 sm:px-6">
       <Suspense>
-        <DineInCart tables={await tables()} />
+        <DineInCart tables={restaurantTables} whatsapp={settings.whatsapp} />
       </Suspense>
     </main>
   );
