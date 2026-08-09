@@ -2,6 +2,7 @@
 
 import { Archive, ImagePlus, Pencil, Plus, X } from "lucide-react";
 import { useState } from "react";
+import { AdminPortal } from "@/components/admin/admin-portal";
 import { AdminTitle } from "@/components/admin/menu-admin";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea } from "@/components/ui/input";
@@ -202,237 +203,249 @@ export function SimpleAdmin({
         ))}
       </div>
       {draft && (
-        <div className="fixed inset-0 z-50 grid place-items-center bg-[#020D13]/65 p-5">
-          <div className="max-h-[94dvh] w-full max-w-xl overflow-y-auto rounded-xl bg-[#FFFBFC] p-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold">Редактирование</h2>
-              <button onClick={() => setDraft(null)}>
-                <X />
-              </button>
-            </div>
-            <div className="mt-6 grid gap-4">
-              <label className="grid gap-2 text-sm font-bold">
-                {kind === "table" ? "Название стола" : "Название RU"}
-                <Input
-                  value={draft.name}
-                  onChange={(e) => setDraft({ ...draft, name: e.target.value })}
-                />
-              </label>
-              {kind !== "table" && (
+        <AdminPortal onClose={() => setDraft(null)}>
+          <div
+            className="fixed inset-0 z-50 grid place-items-center bg-[#020D13]/65 p-5"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Редактирование"
+          >
+            <div className="max-h-[94dvh] w-full max-w-xl overflow-y-auto rounded-xl bg-[#FFFBFC] p-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold">Редактирование</h2>
+                <button onClick={() => setDraft(null)}>
+                  <X />
+                </button>
+              </div>
+              <div className="mt-6 grid gap-4">
                 <label className="grid gap-2 text-sm font-bold">
-                  Название KZ
+                  {kind === "table" ? "Название стола" : "Название RU"}
                   <Input
-                    value={draft.secondary || ""}
+                    value={draft.name}
                     onChange={(e) =>
-                      setDraft({ ...draft, secondary: e.target.value })
+                      setDraft({ ...draft, name: e.target.value })
                     }
                   />
                 </label>
-              )}
-              {kind !== "promotion" && (
-                <label className="grid gap-2 text-sm font-bold">
-                  Порядок
-                  <Input
-                    type="number"
-                    min="0"
-                    value={String(draft.raw.sort_order ?? rows.length + 1)}
-                    onChange={(e) =>
-                      setDraft({
-                        ...draft,
-                        raw: {
-                          ...draft.raw,
-                          sort_order: Number(e.target.value),
-                        },
-                      })
-                    }
-                  />
-                </label>
-              )}
-              {kind === "promotion" && (
-                <>
+                {kind !== "table" && (
                   <label className="grid gap-2 text-sm font-bold">
-                    Описание
-                    <Textarea
-                      value={String(draft.raw.description_ru || "")}
+                    Название KZ
+                    <Input
+                      value={draft.secondary || ""}
                       onChange={(e) =>
-                        setDraft({
-                          ...draft,
-                          raw: { ...draft.raw, description_ru: e.target.value },
-                        })
+                        setDraft({ ...draft, secondary: e.target.value })
                       }
                     />
                   </label>
+                )}
+                {kind !== "promotion" && (
                   <label className="grid gap-2 text-sm font-bold">
-                    Статус
-                    <select
-                      className="h-12 rounded border bg-white px-3"
-                      value={String(draft.raw.status || "draft")}
-                      onChange={(e) =>
-                        setDraft({
-                          ...draft,
-                          raw: { ...draft.raw, status: e.target.value },
-                        })
-                      }
-                    >
-                      <option value="draft">Черновик</option>
-                      <option value="active">Активна</option>
-                      <option value="expired">Завершена</option>
-                    </select>
-                  </label>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <label className="grid gap-2 text-sm font-bold">
-                      Дата начала
-                      <Input
-                        type="date"
-                        value={String(draft.raw.start_date || "")}
-                        onChange={(e) =>
-                          setDraft({
-                            ...draft,
-                            raw: { ...draft.raw, start_date: e.target.value },
-                          })
-                        }
-                      />
-                    </label>
-                    <label className="grid gap-2 text-sm font-bold">
-                      Дата окончания
-                      <Input
-                        type="date"
-                        value={String(draft.raw.end_date || "")}
-                        onChange={(e) =>
-                          setDraft({
-                            ...draft,
-                            raw: { ...draft.raw, end_date: e.target.value },
-                          })
-                        }
-                      />
-                    </label>
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <label className="grid gap-2 text-sm font-bold">
-                      Тип акции
-                      <select
-                        className="h-12 rounded border bg-white px-3"
-                        value={String(draft.raw.promotion_type || "set")}
-                        onChange={(e) =>
-                          setDraft({
-                            ...draft,
-                            raw: {
-                              ...draft.raw,
-                              promotion_type: e.target.value,
-                            },
-                          })
-                        }
-                      >
-                        <option value="set">Сет</option>
-                        <option value="gift">Подарок</option>
-                        <option value="discount">Скидка</option>
-                        <option value="delivery">Доставка</option>
-                      </select>
-                    </label>
-                    <label className="grid gap-2 text-sm font-bold">
-                      Минимальная сумма, ₸
-                      <Input
-                        type="number"
-                        min="0"
-                        value={String(draft.raw.minimum_order || "")}
-                        onChange={(e) =>
-                          setDraft({
-                            ...draft,
-                            raw: {
-                              ...draft.raw,
-                              minimum_order: e.target.value
-                                ? Number(e.target.value)
-                                : null,
-                            },
-                          })
-                        }
-                      />
-                    </label>
-                  </div>
-                  <label className="grid gap-2 text-sm font-bold">
-                    Изображение
-                    <div className="flex flex-wrap items-center gap-3">
-                      <Input
-                        value={String(draft.raw.image_url || "")}
-                        placeholder="URL изображения"
-                        onChange={(e) =>
-                          setDraft({
-                            ...draft,
-                            raw: { ...draft.raw, image_url: e.target.value },
-                          })
-                        }
-                      />
-                      <span className="text-xs font-normal text-[#020D13]/45">
-                        либо
-                      </span>
-                      <label className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-md border px-4 text-sm font-bold">
-                        <ImagePlus className="size-4" /> Загрузить
-                        <input
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={(e) =>
-                            e.target.files?.[0] &&
-                            uploadPromotionImage(e.target.files[0])
-                          }
-                        />
-                      </label>
-                      {Boolean(draft.raw.image_url) && (
-                        <button
-                          type="button"
-                          className="text-sm font-bold text-red-700"
-                          onClick={() =>
-                            setDraft({
-                              ...draft,
-                              raw: { ...draft.raw, image_url: null },
-                            })
-                          }
-                        >
-                          Удалить
-                        </button>
-                      )}
-                    </div>
-                  </label>
-                  <label className="flex items-center gap-2 text-sm font-bold">
-                    <input
-                      type="checkbox"
-                      checked={Boolean(draft.raw.needs_review)}
+                    Порядок
+                    <Input
+                      type="number"
+                      min="0"
+                      value={String(draft.raw.sort_order ?? rows.length + 1)}
                       onChange={(e) =>
                         setDraft({
                           ...draft,
                           raw: {
                             ...draft.raw,
-                            needs_review: e.target.checked,
+                            sort_order: Number(e.target.value),
                           },
                         })
                       }
                     />
-                    Требует проверки
                   </label>
-                </>
-              )}
-              <label className="flex items-center gap-2 text-sm font-bold">
-                <input
-                  type="checkbox"
-                  checked={draft.active}
-                  onChange={(e) =>
-                    setDraft({ ...draft, active: e.target.checked })
-                  }
-                />
-                Активно
-              </label>
-              {error && <p className="text-sm text-red-700">{error}</p>}
-              <div className="flex justify-end gap-3">
-                <Button variant="outline" onClick={() => setDraft(null)}>
-                  Отмена
-                </Button>
-                <Button onClick={save} disabled={saving}>
-                  Сохранить
-                </Button>
+                )}
+                {kind === "promotion" && (
+                  <>
+                    <label className="grid gap-2 text-sm font-bold">
+                      Описание
+                      <Textarea
+                        value={String(draft.raw.description_ru || "")}
+                        onChange={(e) =>
+                          setDraft({
+                            ...draft,
+                            raw: {
+                              ...draft.raw,
+                              description_ru: e.target.value,
+                            },
+                          })
+                        }
+                      />
+                    </label>
+                    <label className="grid gap-2 text-sm font-bold">
+                      Статус
+                      <select
+                        className="h-12 rounded border bg-white px-3"
+                        value={String(draft.raw.status || "draft")}
+                        onChange={(e) =>
+                          setDraft({
+                            ...draft,
+                            raw: { ...draft.raw, status: e.target.value },
+                          })
+                        }
+                      >
+                        <option value="draft">Черновик</option>
+                        <option value="active">Активна</option>
+                        <option value="expired">Завершена</option>
+                      </select>
+                    </label>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <label className="grid gap-2 text-sm font-bold">
+                        Дата начала
+                        <Input
+                          type="date"
+                          value={String(draft.raw.start_date || "")}
+                          onChange={(e) =>
+                            setDraft({
+                              ...draft,
+                              raw: { ...draft.raw, start_date: e.target.value },
+                            })
+                          }
+                        />
+                      </label>
+                      <label className="grid gap-2 text-sm font-bold">
+                        Дата окончания
+                        <Input
+                          type="date"
+                          value={String(draft.raw.end_date || "")}
+                          onChange={(e) =>
+                            setDraft({
+                              ...draft,
+                              raw: { ...draft.raw, end_date: e.target.value },
+                            })
+                          }
+                        />
+                      </label>
+                    </div>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <label className="grid gap-2 text-sm font-bold">
+                        Тип акции
+                        <select
+                          className="h-12 rounded border bg-white px-3"
+                          value={String(draft.raw.promotion_type || "set")}
+                          onChange={(e) =>
+                            setDraft({
+                              ...draft,
+                              raw: {
+                                ...draft.raw,
+                                promotion_type: e.target.value,
+                              },
+                            })
+                          }
+                        >
+                          <option value="set">Сет</option>
+                          <option value="gift">Подарок</option>
+                          <option value="discount">Скидка</option>
+                          <option value="delivery">Доставка</option>
+                        </select>
+                      </label>
+                      <label className="grid gap-2 text-sm font-bold">
+                        Минимальная сумма, ₸
+                        <Input
+                          type="number"
+                          min="0"
+                          value={String(draft.raw.minimum_order || "")}
+                          onChange={(e) =>
+                            setDraft({
+                              ...draft,
+                              raw: {
+                                ...draft.raw,
+                                minimum_order: e.target.value
+                                  ? Number(e.target.value)
+                                  : null,
+                              },
+                            })
+                          }
+                        />
+                      </label>
+                    </div>
+                    <label className="grid gap-2 text-sm font-bold">
+                      Изображение
+                      <div className="flex flex-wrap items-center gap-3">
+                        <Input
+                          value={String(draft.raw.image_url || "")}
+                          placeholder="URL изображения"
+                          onChange={(e) =>
+                            setDraft({
+                              ...draft,
+                              raw: { ...draft.raw, image_url: e.target.value },
+                            })
+                          }
+                        />
+                        <span className="text-xs font-normal text-[#020D13]/45">
+                          либо
+                        </span>
+                        <label className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-md border px-4 text-sm font-bold">
+                          <ImagePlus className="size-4" /> Загрузить
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) =>
+                              e.target.files?.[0] &&
+                              uploadPromotionImage(e.target.files[0])
+                            }
+                          />
+                        </label>
+                        {Boolean(draft.raw.image_url) && (
+                          <button
+                            type="button"
+                            className="text-sm font-bold text-red-700"
+                            onClick={() =>
+                              setDraft({
+                                ...draft,
+                                raw: { ...draft.raw, image_url: null },
+                              })
+                            }
+                          >
+                            Удалить
+                          </button>
+                        )}
+                      </div>
+                    </label>
+                    <label className="flex items-center gap-2 text-sm font-bold">
+                      <input
+                        type="checkbox"
+                        checked={Boolean(draft.raw.needs_review)}
+                        onChange={(e) =>
+                          setDraft({
+                            ...draft,
+                            raw: {
+                              ...draft.raw,
+                              needs_review: e.target.checked,
+                            },
+                          })
+                        }
+                      />
+                      Требует проверки
+                    </label>
+                  </>
+                )}
+                <label className="flex items-center gap-2 text-sm font-bold">
+                  <input
+                    type="checkbox"
+                    checked={draft.active}
+                    onChange={(e) =>
+                      setDraft({ ...draft, active: e.target.checked })
+                    }
+                  />
+                  Активно
+                </label>
+                {error && <p className="text-sm text-red-700">{error}</p>}
+                <div className="flex justify-end gap-3">
+                  <Button variant="outline" onClick={() => setDraft(null)}>
+                    Отмена
+                  </Button>
+                  <Button onClick={save} disabled={saving}>
+                    Сохранить
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </AdminPortal>
       )}
     </div>
   );

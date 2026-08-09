@@ -52,6 +52,7 @@ export function AdminShell({
               key={href}
               href={href}
               className={`flex min-h-11 items-center gap-3 rounded-md px-3 text-sm font-semibold ${pathname === href ? "bg-[#020D13] text-white" : "text-[#020D13]/65 hover:bg-[#020D13]/5"}`}
+              aria-current={pathname === href ? "page" : undefined}
             >
               <Icon className="size-4" />
               {label}
@@ -76,6 +77,7 @@ export function AdminShell({
             value={pathname}
             onChange={(e) => router.push(e.target.value)}
             className="h-10 rounded-md border px-3 text-sm font-bold"
+            aria-label="Раздел админ-панели"
           >
             {nav.map(([href, label]) => (
               <option key={href} value={href}>
@@ -86,7 +88,9 @@ export function AdminShell({
         </div>
       </header>
       <main className="px-4 py-7 sm:px-7 lg:ml-64 lg:px-10 lg:py-10">
-        {children}
+        <div key={pathname} className="admin-page-enter">
+          {children}
+        </div>
       </main>
     </div>
   );

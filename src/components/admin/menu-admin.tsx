@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Archive, ImagePlus, Pencil, Plus, Search, X } from "lucide-react";
 import { useMemo, useState } from "react";
+import { AdminPortal } from "@/components/admin/admin-portal";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea } from "@/components/ui/input";
 import { formatPrice } from "@/lib/utils";
@@ -294,156 +295,163 @@ export function MenuAdmin({
         </table>
       </div>
       {draft && (
-        <div className="fixed inset-0 z-50 grid place-items-end bg-[#020D13]/65 p-0 backdrop-blur-sm sm:place-items-center sm:p-5">
-          <div className="max-h-[94dvh] w-full max-w-3xl overflow-y-auto rounded-t-2xl bg-[#FFFBFC] p-5 sm:rounded-xl sm:p-7">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold">
-                {draft.id ? "Редактировать блюдо" : "Новое блюдо"}
-              </h2>
-              <button
-                onClick={() => setDraft(null)}
-                className="grid size-10 place-items-center"
-              >
-                <X className="size-5" />
-              </button>
-            </div>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <Field label="Название RU">
-                <Input
-                  value={draft.nameRu || ""}
-                  onChange={(e) =>
-                    setDraft({ ...draft, nameRu: e.target.value })
-                  }
-                />
-              </Field>
-              <Field label="Название KZ">
-                <Input
-                  value={draft.nameKk || ""}
-                  onChange={(e) =>
-                    setDraft({ ...draft, nameKk: e.target.value })
-                  }
-                />
-              </Field>
-              <Field label="Описание RU">
-                <Textarea
-                  value={draft.descriptionRu || ""}
-                  onChange={(e) =>
-                    setDraft({ ...draft, descriptionRu: e.target.value })
-                  }
-                />
-              </Field>
-              <Field label="Описание KZ">
-                <Textarea
-                  value={draft.descriptionKk || ""}
-                  onChange={(e) =>
-                    setDraft({ ...draft, descriptionKk: e.target.value })
-                  }
-                />
-              </Field>
-              <Field label="Цена">
-                <Input
-                  type="number"
-                  min="0"
-                  value={draft.price || ""}
-                  onChange={(e) =>
-                    setDraft({ ...draft, price: Number(e.target.value) })
-                  }
-                />
-              </Field>
-              <Field label="Категория">
-                <select
-                  value={draft.categoryId || ""}
-                  onChange={(e) =>
-                    setDraft({ ...draft, categoryId: e.target.value })
-                  }
-                  className="h-12 rounded-md border bg-white px-4"
+        <AdminPortal onClose={() => setDraft(null)}>
+          <div
+            className="fixed inset-0 z-50 grid place-items-end bg-[#020D13]/65 p-0 backdrop-blur-sm sm:place-items-center sm:p-5"
+            role="dialog"
+            aria-modal="true"
+            aria-label={draft.id ? "Редактирование блюда" : "Новое блюдо"}
+          >
+            <div className="max-h-[94dvh] w-full max-w-3xl overflow-y-auto rounded-t-2xl bg-[#FFFBFC] p-5 sm:rounded-xl sm:p-7">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold">
+                  {draft.id ? "Редактировать блюдо" : "Новое блюдо"}
+                </h2>
+                <button
+                  onClick={() => setDraft(null)}
+                  className="grid size-10 place-items-center"
                 >
-                  {categories.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.nameRu}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-              <div className="sm:col-span-2">
-                <Field label="Фото">
-                  <div className="flex items-center gap-4">
-                    {draft.imageUrl && (
-                      <div className="relative size-20 overflow-hidden bg-[#020D13]">
-                        <Image
-                          src={draft.imageUrl}
-                          alt=""
-                          fill
-                          sizes="80px"
-                          className="object-contain p-1"
+                  <X className="size-5" />
+                </button>
+              </div>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <Field label="Название RU">
+                  <Input
+                    value={draft.nameRu || ""}
+                    onChange={(e) =>
+                      setDraft({ ...draft, nameRu: e.target.value })
+                    }
+                  />
+                </Field>
+                <Field label="Название KZ">
+                  <Input
+                    value={draft.nameKk || ""}
+                    onChange={(e) =>
+                      setDraft({ ...draft, nameKk: e.target.value })
+                    }
+                  />
+                </Field>
+                <Field label="Описание RU">
+                  <Textarea
+                    value={draft.descriptionRu || ""}
+                    onChange={(e) =>
+                      setDraft({ ...draft, descriptionRu: e.target.value })
+                    }
+                  />
+                </Field>
+                <Field label="Описание KZ">
+                  <Textarea
+                    value={draft.descriptionKk || ""}
+                    onChange={(e) =>
+                      setDraft({ ...draft, descriptionKk: e.target.value })
+                    }
+                  />
+                </Field>
+                <Field label="Цена">
+                  <Input
+                    type="number"
+                    min="0"
+                    value={draft.price || ""}
+                    onChange={(e) =>
+                      setDraft({ ...draft, price: Number(e.target.value) })
+                    }
+                  />
+                </Field>
+                <Field label="Категория">
+                  <select
+                    value={draft.categoryId || ""}
+                    onChange={(e) =>
+                      setDraft({ ...draft, categoryId: e.target.value })
+                    }
+                    className="h-12 rounded-md border bg-white px-4"
+                  >
+                    {categories.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.nameRu}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <div className="sm:col-span-2">
+                  <Field label="Фото">
+                    <div className="flex items-center gap-4">
+                      {draft.imageUrl && (
+                        <div className="relative size-20 overflow-hidden bg-[#020D13]">
+                          <Image
+                            src={draft.imageUrl}
+                            alt=""
+                            fill
+                            sizes="80px"
+                            className="object-contain p-1"
+                          />
+                        </div>
+                      )}
+                      <label className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-md border px-4 text-sm font-bold">
+                        <ImagePlus className="size-4" />
+                        Загрузить
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) =>
+                            e.target.files?.[0] && upload(e.target.files[0])
+                          }
                         />
-                      </div>
-                    )}
-                    <label className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-md border px-4 text-sm font-bold">
-                      <ImagePlus className="size-4" />
-                      Загрузить
+                      </label>
+                      {draft.imageUrl && (
+                        <button
+                          type="button"
+                          onClick={removePhoto}
+                          className="min-h-11 rounded-md border border-red-200 px-4 text-sm font-bold text-red-700"
+                        >
+                          Удалить фото
+                        </button>
+                      )}
+                    </div>
+                  </Field>
+                </div>
+                <div className="sm:col-span-2 grid grid-cols-2 gap-3 md:grid-cols-4">
+                  {[
+                    ["isAvailable", "В наличии"],
+                    ["isVisiblePublic", "На сайте"],
+                    ["isVisibleDineIn", "В QR"],
+                    ["isFeatured", "Рекомендуем"],
+                    ["isSpicy", "Острое"],
+                    ["isNew", "Новинка"],
+                    ["needsReview", "Проверить"],
+                  ].map(([key, label]) => (
+                    <label
+                      key={key}
+                      className="flex items-center gap-2 rounded-md border bg-white p-3 text-xs font-bold"
+                    >
                       <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
+                        type="checkbox"
+                        checked={Boolean(draft[key as keyof MenuItem])}
                         onChange={(e) =>
-                          e.target.files?.[0] && upload(e.target.files[0])
+                          setDraft({ ...draft, [key]: e.target.checked })
                         }
                       />
+                      {label}
                     </label>
-                    {draft.imageUrl && (
-                      <button
-                        type="button"
-                        onClick={removePhoto}
-                        className="min-h-11 rounded-md border border-red-200 px-4 text-sm font-bold text-red-700"
-                      >
-                        Удалить фото
-                      </button>
-                    )}
-                  </div>
-                </Field>
+                  ))}
+                </div>
               </div>
-              <div className="sm:col-span-2 grid grid-cols-2 gap-3 md:grid-cols-4">
-                {[
-                  ["isAvailable", "В наличии"],
-                  ["isVisiblePublic", "На сайте"],
-                  ["isVisibleDineIn", "В QR"],
-                  ["isFeatured", "Рекомендуем"],
-                  ["isSpicy", "Острое"],
-                  ["isNew", "Новинка"],
-                  ["needsReview", "Проверить"],
-                ].map(([key, label]) => (
-                  <label
-                    key={key}
-                    className="flex items-center gap-2 rounded-md border bg-white p-3 text-xs font-bold"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={Boolean(draft[key as keyof MenuItem])}
-                      onChange={(e) =>
-                        setDraft({ ...draft, [key]: e.target.checked })
-                      }
-                    />
-                    {label}
-                  </label>
-                ))}
+              {error && (
+                <p className="mt-4 rounded bg-red-50 p-3 text-sm text-red-800">
+                  {error}
+                </p>
+              )}
+              <div className="mt-6 flex justify-end gap-3">
+                <Button variant="outline" onClick={() => setDraft(null)}>
+                  Отмена
+                </Button>
+                <Button onClick={save} disabled={saving}>
+                  {saving ? "Сохранение…" : "Сохранить"}
+                </Button>
               </div>
-            </div>
-            {error && (
-              <p className="mt-4 rounded bg-red-50 p-3 text-sm text-red-800">
-                {error}
-              </p>
-            )}
-            <div className="mt-6 flex justify-end gap-3">
-              <Button variant="outline" onClick={() => setDraft(null)}>
-                Отмена
-              </Button>
-              <Button onClick={save} disabled={saving}>
-                {saving ? "Сохранение…" : "Сохранить"}
-              </Button>
             </div>
           </div>
-        </div>
+        </AdminPortal>
       )}
     </div>
   );

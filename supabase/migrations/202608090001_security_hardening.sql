@@ -135,9 +135,6 @@ set public = true,
 where id = 'menu-images';
 
 drop policy if exists "public reads menu images" on storage.objects;
-create policy "public reads menu images"
-on storage.objects for select to anon, authenticated
-using (bucket_id = 'menu-images');
 
 drop policy if exists "admins upload menu images" on storage.objects;
 create policy "admins upload menu images"
