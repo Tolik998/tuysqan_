@@ -277,6 +277,7 @@ export function MenuAdmin({
                       onClick={() => setDraft(item)}
                       className="grid size-10 place-items-center rounded hover:bg-[#020D13]/5"
                       aria-label="Редактировать"
+                      title="Редактировать"
                     >
                       <Pencil className="size-4" />
                     </button>
@@ -284,6 +285,7 @@ export function MenuAdmin({
                       onClick={() => archive(item.id)}
                       className="grid size-10 place-items-center rounded text-red-700 hover:bg-red-50"
                       aria-label="Архивировать"
+                      title="Архивировать"
                     >
                       <Archive className="size-4" />
                     </button>
@@ -310,6 +312,8 @@ export function MenuAdmin({
                 <button
                   onClick={() => setDraft(null)}
                   className="grid size-10 place-items-center"
+                  aria-label="Закрыть"
+                  title="Закрыть"
                 >
                   <X className="size-5" />
                 </button>

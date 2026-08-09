@@ -188,6 +188,7 @@ export function SimpleAdmin({
                 }
                 className="grid size-10 place-items-center"
                 aria-label={`Редактировать ${row.name}`}
+                title="Редактировать"
               >
                 <Pencil className="size-4" />
               </button>
@@ -195,6 +196,7 @@ export function SimpleAdmin({
                 onClick={() => archive(row.id)}
                 className="grid size-10 place-items-center text-red-700"
                 aria-label={`Архивировать ${row.name}`}
+                title="Архивировать"
               >
                 <Archive className="size-4" />
               </button>
@@ -213,7 +215,11 @@ export function SimpleAdmin({
             <div className="max-h-[94dvh] w-full max-w-xl overflow-y-auto rounded-xl bg-[#FFFBFC] p-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold">Редактирование</h2>
-                <button onClick={() => setDraft(null)}>
+                <button
+                  onClick={() => setDraft(null)}
+                  aria-label="Закрыть"
+                  title="Закрыть"
+                >
                   <X />
                 </button>
               </div>
