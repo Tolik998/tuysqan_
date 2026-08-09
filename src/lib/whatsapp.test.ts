@@ -26,6 +26,8 @@ describe("WhatsApp formatter", () => {
     const text = formatWhatsAppOrder(order);
     expect(text).toContain("2 × Шакшука — 4 580 ₸");
     expect(text).toContain("Без лука");
+    expect(text).toContain("Получение: Доставка");
+    expect(text).toContain("Оплата: Наличными");
     expect(text).not.toContain("Новый заказ TUYSQAN");
     expect(text).not.toContain("TQ-20260808-001");
     expect(text).not.toContain("Отправлено с сайта Tuysqan");
@@ -53,5 +55,18 @@ describe("WhatsApp formatter", () => {
     expect(text).toContain("2 × Шакшука — 4 580 ₸");
     expect(text).toContain("Комментарий: Без лука");
     expect(url.startsWith("https://wa.me/77715947903?text=")).toBe(true);
+  });
+
+  it("formats pickup and remote payment without an address", () => {
+    const text = formatWhatsAppOrder({
+      ...order,
+      fulfillmentType: "pickup",
+      paymentMethod: "remote",
+      deliveryAddress: undefined,
+    });
+
+    expect(text).toContain("Получение: Самовывоз");
+    expect(text).toContain("Оплата: Удалённая оплата");
+    expect(text).not.toContain("Адрес:");
   });
 });

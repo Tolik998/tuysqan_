@@ -62,6 +62,25 @@ export async function POST(request: Request) {
       );
 
     const data = parsed.data;
+    const isPickup =
+      type === "delivery" &&
+      "fulfillmentType" in data &&
+      data.fulfillmentType === "pickup";
+    const paymentLabel =
+      type === "delivery" &&
+      "paymentMethod" in data &&
+      data.paymentMethod === "remote"
+        ? "Удалённая оплата"
+        : "Наличными";
+    const storedComment =
+      type === "delivery"
+        ? [
+            `Оплата: ${paymentLabel}`,
+            data.comment ? `Комментарий: ${data.comment}` : null,
+          ]
+            .filter(Boolean)
+            .join("\n")
+        : data.comment || null;
     const itemIds = [...new Set(data.items.map((item) => item.menuItemId))];
     const visibilityField =
       type === "dine_in" ? "is_visible_dine_in" : "is_visible_public";
@@ -130,12 +149,18 @@ export async function POST(request: Request) {
         customer_name: data.customerName || null,
         customer_phone: null,
         delivery_address:
-          "deliveryAddress" in data ? data.deliveryAddress : null,
-        entrance: "entrance" in data ? data.entrance || null : null,
-        floor: "floor" in data ? data.floor || null : null,
-        apartment: "apartment" in data ? data.apartment || null : null,
+          "deliveryAddress" in data
+            ? isPickup
+              ? "Самовывоз"
+              : data.deliveryAddress
+            : null,
+        entrance:
+          "entrance" in data && !isPickup ? data.entrance || null : null,
+        floor: "floor" in data && !isPickup ? data.floor || null : null,
+        apartment:
+          "apartment" in data && !isPickup ? data.apartment || null : null,
         table_id: "tableId" in data ? data.tableId : null,
-        comment: data.comment || null,
+        comment: storedComment,
         subtotal: total,
         total,
         public_token: publicToken,

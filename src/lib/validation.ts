@@ -8,16 +8,43 @@ export const orderItemSchema = z.object({
   lineTotal: z.number().int().nonnegative(),
 });
 
-export const deliveryOrderSchema = z.object({
+const deliveryOrderFieldsSchema = z.object({
+  fulfillmentType: z.enum(["delivery", "pickup"]),
+  paymentMethod: z.enum(["cash", "remote"]),
   customerName: z.string().trim().min(2, "Укажите имя").max(100),
-  deliveryAddress: z.string().trim().min(5, "Укажите адрес доставки").max(300),
+  deliveryAddress: z.string().trim().max(300).optional(),
   entrance: z.string().trim().max(30).optional(),
   floor: z.string().trim().max(30).optional(),
   apartment: z.string().trim().max(50).optional(),
   comment: z.string().trim().max(500).optional(),
-  items: z.array(orderItemSchema).min(1, "Корзина пуста").max(50),
-  total: z.number().int().positive(),
 });
+
+function validateDeliveryAddress(
+  order: z.infer<typeof deliveryOrderFieldsSchema>,
+  context: z.RefinementCtx,
+) {
+  if (
+    order.fulfillmentType === "delivery" &&
+    (!order.deliveryAddress || order.deliveryAddress.length < 5)
+  ) {
+    context.addIssue({
+      code: "custom",
+      path: ["deliveryAddress"],
+      message: "Укажите адрес доставки",
+    });
+  }
+}
+
+export const deliveryOrderFormSchema = deliveryOrderFieldsSchema.superRefine(
+  validateDeliveryAddress,
+);
+
+export const deliveryOrderSchema = deliveryOrderFieldsSchema
+  .extend({
+    items: z.array(orderItemSchema).min(1, "Корзина пуста").max(50),
+    total: z.number().int().positive(),
+  })
+  .superRefine(validateDeliveryAddress);
 
 export const dineInOrderSchema = z.object({
   tableId: z.string().min(1, "Выберите стол"),

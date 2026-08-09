@@ -3,8 +3,10 @@ import { formatPrice } from "@/lib/utils";
 
 export type WhatsAppOrder = {
   orderNumber: string;
+  fulfillmentType?: "delivery" | "pickup";
+  paymentMethod?: "cash" | "remote";
   customerName: string;
-  deliveryAddress: string;
+  deliveryAddress?: string;
   entrance?: string;
   floor?: string;
   apartment?: string;
@@ -26,6 +28,10 @@ function safe(value?: string) {
 }
 
 export function formatWhatsAppOrder(order: WhatsAppOrder) {
+  const isPickup = order.fulfillmentType === "pickup";
+  const fulfillmentLabel = isPickup ? "Самовывоз" : "Доставка";
+  const paymentLabel =
+    order.paymentMethod === "remote" ? "Удалённая оплата" : "Наличными";
   const addressDetails = [
     order.entrance && `подъезд ${safe(order.entrance)}`,
     order.floor && `этаж ${safe(order.floor)}`,
@@ -39,7 +45,10 @@ export function formatWhatsAppOrder(order: WhatsAppOrder) {
 
   return [
     `Имя: ${safe(order.customerName)}`,
-    `Адрес: ${safe(order.deliveryAddress)}${addressDetails.length ? ` (${addressDetails.join(", ")})` : ""}`,
+    `Получение: ${fulfillmentLabel}`,
+    !isPickup &&
+      `Адрес: ${safe(order.deliveryAddress)}${addressDetails.length ? ` (${addressDetails.join(", ")})` : ""}`,
+    `Оплата: ${paymentLabel}`,
     "",
     "Заказ:",
     ...itemLines,
@@ -47,7 +56,9 @@ export function formatWhatsAppOrder(order: WhatsAppOrder) {
     `Итого: ${formatPrice(order.total)}`,
     "",
     `Комментарий: ${safe(order.comment)}`,
-  ].join("\n");
+  ]
+    .filter((line) => line !== false)
+    .join("\n");
 }
 
 export function createWhatsAppUrl(phone: string, order: WhatsAppOrder) {

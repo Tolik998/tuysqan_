@@ -138,7 +138,11 @@ export function OrdersAdmin({ initialOrders }: { initialOrders: Order[] }) {
                   </p>
                 </div>
                 <span className="rounded-full bg-[#020D13]/6 px-3 py-1 text-[10px] font-bold uppercase">
-                  {order.order_type === "dine_in" ? "В ресторане" : "Доставка"}
+                  {order.order_type === "dine_in"
+                    ? "В ресторане"
+                    : order.delivery_address === "Самовывоз"
+                      ? "Самовывоз"
+                      : "Доставка"}
                 </span>
               </div>
               <div className="mt-4 grid gap-2 rounded-md bg-[#f7f5f1] p-3 text-sm">
@@ -161,8 +165,10 @@ export function OrdersAdmin({ initialOrders }: { initialOrders: Order[] }) {
                   </p>
                 )}
                 {order.comment && (
-                  <p className="text-[#020D13]/60">
-                    Комментарий: {order.comment}
+                  <p className="whitespace-pre-line text-[#020D13]/60">
+                    {order.order_type === "dine_in"
+                      ? `Комментарий: ${order.comment}`
+                      : order.comment}
                   </p>
                 )}
               </div>
