@@ -10,9 +10,6 @@ export default function AdminLoginPage() {
           Панель управления
         </p>
         <h1 className="mt-3 text-3xl font-bold">Вход для команды</h1>
-        <p className="mt-3 text-sm leading-6 text-[#020D13]/55">
-          Публичной регистрации нет. Аккаунты создаются вручную в Supabase.
-        </p>
         <Suspense>
           <LoginForm />
         </Suspense>
