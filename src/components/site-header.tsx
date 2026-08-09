@@ -18,6 +18,7 @@ const links = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const count = useCartStore((state) => cartQuantity(state.lines));
+  const orderHref = count > 0 ? "/checkout" : "/menu";
 
   return (
     <header className="sticky top-0 z-40 border-b border-[#020D13]/8 bg-[#FFFBFC]/95 backdrop-blur-md">
@@ -51,7 +52,7 @@ export function SiteHeader() {
             )}
           </Link>
           <Link
-            href="/menu"
+            href={orderHref}
             className="hidden min-h-11 items-center rounded-md bg-[#020D13] px-5 text-sm font-bold text-white sm:flex"
           >
             Заказать
