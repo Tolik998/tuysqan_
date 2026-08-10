@@ -22,7 +22,7 @@ export async function GET(
   const result = await supabase
     .from("orders")
     .select(
-      "id,order_number,status,total,created_at,tables(label),order_items(item_name_snapshot,price_snapshot,quantity,line_total)",
+      "id,order_number,total,customer_name,comment,tables(label),order_items(item_name_snapshot,price_snapshot,quantity,line_total)",
     )
     .eq("id", id)
     .eq("public_token", token)

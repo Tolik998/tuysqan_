@@ -1,125 +1,115 @@
 "use client";
 
-import { Check, ChefHat, Clock3, UtensilsCrossed } from "lucide-react";
+import { Loader2, MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { formatPrice } from "@/lib/utils";
+import { createDineInWhatsAppUrl } from "@/lib/whatsapp";
 
 type OrderView = {
-  id: string;
-  order_number: string;
-  status: string;
   total: number;
+  customer_name: string | null;
+  comment: string | null;
   tables: { label: string } | null;
   order_items: Array<{
     item_name_snapshot: string;
+    price_snapshot: number;
     quantity: number;
     line_total: number;
   }>;
 };
 
-const statusLabels: Record<string, string> = {
-  new: "Новый",
-  accepted: "Принят",
-  preparing: "Готовится",
-  ready: "Готов",
-  served: "Подан",
-  completed: "Завершён",
-  cancelled: "Отменён",
-};
-const steps = ["new", "accepted", "preparing", "ready", "served"];
-
-export function OrderStatus({ id, token }: { id: string; token: string }) {
-  const [order, setOrder] = useState<OrderView | null>(null);
+export function OrderStatus({
+  id,
+  token,
+  whatsapp,
+}: {
+  id: string;
+  token: string;
+  whatsapp: string;
+}) {
+  const [whatsappUrl, setWhatsappUrl] = useState("");
   const [error, setError] = useState("");
+
   useEffect(() => {
+    let cancelled = false;
+    const storageKey = `dine-in-whatsapp:${id}`;
+    const cachedUrl = window.sessionStorage.getItem(storageKey);
+
+    if (cachedUrl) {
+      const redirectTimer = window.setTimeout(() => {
+        if (cancelled) return;
+        setWhatsappUrl(cachedUrl);
+        window.location.assign(cachedUrl);
+      }, 0);
+      return () => {
+        cancelled = true;
+        window.clearTimeout(redirectTimer);
+      };
+    }
+
     fetch(`/api/orders/${id}?token=${encodeURIComponent(token)}`)
       .then(async (response) => {
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error);
-        setOrder(data);
+        const data = (await response.json()) as OrderView & { error?: string };
+        if (!response.ok) throw new Error(data.error || "Заказ не найден");
+        return data;
       })
-      .catch((reason) => setError(reason.message || "Заказ не найден"));
-    const supabase = createClient();
-    if (!supabase) return;
-    const channel = supabase
-      .channel(`order-${token}`)
-      .on("broadcast", { event: "status" }, ({ payload }) =>
-        setOrder((current) =>
-          current ? { ...current, status: payload.status } : current,
-        ),
-      )
-      .subscribe();
-    return () => {
-      void supabase.removeChannel(channel);
-    };
-  }, [id, token]);
+      .then((order) => {
+        if (cancelled) return;
+        const url = createDineInWhatsAppUrl(whatsapp, {
+          tableLabel: order.tables?.label || "—",
+          customerName: order.customer_name || "",
+          comment: order.comment || "",
+          items: order.order_items.map((item) => ({
+            menuItemId: "",
+            itemNameSnapshot: item.item_name_snapshot,
+            priceSnapshot: item.price_snapshot,
+            quantity: item.quantity,
+            lineTotal: item.line_total,
+          })),
+          total: order.total,
+        });
+        window.sessionStorage.setItem(storageKey, url);
+        setWhatsappUrl(url);
+        window.location.assign(url);
+      })
+      .catch((reason: unknown) => {
+        if (!cancelled) {
+          setError(
+            reason instanceof Error ? reason.message : "Не удалось открыть WhatsApp",
+          );
+        }
+      });
 
-  if (error)
-    return (
-      <div className="rounded-xl bg-red-50 p-6 text-center font-semibold text-red-800">
-        {error}
-      </div>
-    );
-  if (!order)
-    return (
-      <div className="grid min-h-64 place-items-center">
-        <Clock3 className="size-8 animate-pulse" />
-      </div>
-    );
-  const currentStep = Math.max(0, steps.indexOf(order.status));
+    return () => {
+      cancelled = true;
+    };
+  }, [id, token, whatsapp]);
+
   return (
-    <div className="mx-auto max-w-2xl">
-      <div className="text-center">
-        <div className="mx-auto grid size-16 place-items-center rounded-full bg-emerald-100 text-emerald-800">
-          <Check className="size-8" />
-        </div>
-        <p className="mt-5 text-xs font-bold uppercase tracking-[.2em] text-[#020D13]/45">
-          Заказ принят
-        </p>
-        <h1 className="mt-2 text-4xl font-bold">{order.order_number}</h1>
-        <p className="mt-3 text-lg font-semibold">
-          Стол {order.tables?.label || "—"}
-        </p>
-      </div>
-      <div className="mt-10 grid grid-cols-5 gap-1">
-        {steps.map((step, index) => (
-          <div key={step} className="text-center">
-            <div
-              className={`mx-auto mb-2 h-1.5 rounded ${index <= currentStep ? "bg-[#020D13]" : "bg-[#020D13]/12"}`}
-            />
-            <span className="text-[10px] font-bold sm:text-xs">
-              {statusLabels[step]}
-            </span>
-          </div>
-        ))}
-      </div>
-      <div className="mt-9 border border-[#020D13]/10 bg-white p-5 sm:p-7">
-        <div className="mb-4 flex items-center gap-2">
-          <ChefHat className="size-5" />
-          <h2 className="text-xl font-bold">{statusLabels[order.status]}</h2>
-        </div>
-        <div className="grid gap-3">
-          {order.order_items.map((item, index) => (
-            <div
-              key={`${item.item_name_snapshot}-${index}`}
-              className="flex justify-between gap-4 border-b border-[#020D13]/8 pb-3 text-sm"
+    <div className="mx-auto grid min-h-[55vh] max-w-xl place-items-center text-center">
+      <div className="w-full border border-[#020D13]/10 bg-white p-7 sm:p-10">
+        {whatsappUrl ? (
+          <>
+            <p className="mb-5 text-sm leading-6 text-[#020D13]/60">
+              Если WhatsApp не открылся автоматически, нажмите кнопку.
+            </p>
+            <a
+              href={whatsappUrl}
+              className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-md bg-[#020D13] px-6 text-base font-bold text-white"
             >
-              <span>
-                {item.quantity} × {item.item_name_snapshot}
-              </span>
-              <strong>{formatPrice(item.line_total)}</strong>
-            </div>
-          ))}
-        </div>
-        <div className="mt-5 flex items-center justify-between text-lg">
-          <span>Итого</span>
-          <strong>{formatPrice(order.total)}</strong>
-        </div>
-      </div>
-      <div className="mt-5 flex items-center justify-center gap-2 text-center text-sm text-[#020D13]/50">
-        <UtensilsCrossed className="size-4" />
-        Статус обновится автоматически
+              <MessageCircle className="size-5" />
+              Открыть WhatsApp с заказом
+            </a>
+          </>
+        ) : error ? (
+          <p className="rounded-md bg-red-50 p-4 text-sm font-semibold text-red-800">
+            {error}
+          </p>
+        ) : (
+          <div className="flex items-center justify-center gap-3 text-sm font-semibold">
+            <Loader2 className="size-5 animate-spin" />
+            Открываем WhatsApp…
+          </div>
+        )}
       </div>
     </div>
   );

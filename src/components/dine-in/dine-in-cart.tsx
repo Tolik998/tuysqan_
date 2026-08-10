@@ -72,8 +72,11 @@ export function DineInCart({
         items,
         total: result.total,
       });
+      window.sessionStorage.setItem(
+        `dine-in-whatsapp:${result.id}`,
+        whatsappUrl,
+      );
       clear();
-      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
       router.push(`/dine-in/order/${result.id}?token=${result.publicToken}`);
     } catch (error) {
       setServerError(
