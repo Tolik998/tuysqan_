@@ -87,17 +87,17 @@ export function DeliveryCheckout() {
     return (
       <div className="mx-auto max-w-xl border border-[#020D13]/10 bg-white p-8 text-center">
         <CheckCircle2 className="mx-auto size-12 text-emerald-700" />
-        <h1 className="mt-4 text-3xl font-bold">Заказ создан</h1>
+        <h1 className="mt-4 text-3xl font-bold">Отправьте сообщение в WhatsApp</h1>
         <p className="mt-3 text-[#020D13]/60">
-          Номер {orderNumber}. WhatsApp открыт с готовым сообщением — отправьте
-          его, чтобы ресторан подтвердил заказ.
+          Ресторан получит заказ только после того, как вы отправите
+          подготовленное сообщение в WhatsApp.
         </p>
         <a
           href={whatsappUrl || `https://wa.me/${restaurantSettings.whatsapp}`}
           className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-md bg-[#020D13] px-5 font-bold text-white"
         >
           <MessageCircle className="size-5" />
-          Открыть WhatsApp
+          Отправить сообщение в WhatsApp
         </a>
       </div>
     );

@@ -90,14 +90,16 @@ export function OrderStatus({
         {whatsappUrl ? (
           <>
             <p className="mb-5 text-sm leading-6 text-[#020D13]/60">
-              Если WhatsApp не открылся автоматически, нажмите кнопку.
+              Ресторан получит заказ только после того, как вы отправите
+              подготовленное сообщение в WhatsApp. Если WhatsApp не открылся
+              автоматически, нажмите кнопку.
             </p>
             <a
               href={whatsappUrl}
               className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-md bg-[#020D13] px-6 text-base font-bold text-white"
             >
               <MessageCircle className="size-5" />
-              Открыть WhatsApp с заказом
+              Отправить сообщение в WhatsApp
             </a>
           </>
         ) : error ? (
