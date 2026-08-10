@@ -24,6 +24,7 @@ export function DeliveryCheckout() {
   const clear = useCartStore((state) => state.clear);
   const [serverError, setServerError] = useState("");
   const [orderNumber, setOrderNumber] = useState("");
+  const [whatsappUrl, setWhatsappUrl] = useState("");
   const form = useForm<FormValues>({
     resolver: zodResolver(deliveryOrderFormSchema),
     defaultValues: {
@@ -66,14 +67,15 @@ export function DeliveryCheckout() {
       if (!response.ok)
         throw new Error(result.error || "Не удалось создать заказ");
       setOrderNumber(result.orderNumber);
-      const whatsappUrl = createWhatsAppUrl(restaurantSettings.whatsapp, {
+      const preparedWhatsAppUrl = createWhatsAppUrl(restaurantSettings.whatsapp, {
         orderNumber: result.orderNumber,
         ...values,
         items,
         total,
       });
+      setWhatsappUrl(preparedWhatsAppUrl);
       clear();
-      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+      window.location.assign(preparedWhatsAppUrl);
     } catch (error) {
       setServerError(
         error instanceof Error ? error.message : "Не удалось создать заказ",
@@ -91,7 +93,7 @@ export function DeliveryCheckout() {
           его, чтобы ресторан подтвердил заказ.
         </p>
         <a
-          href={`https://wa.me/${restaurantSettings.whatsapp}`}
+          href={whatsappUrl || `https://wa.me/${restaurantSettings.whatsapp}`}
           className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-md bg-[#020D13] px-5 font-bold text-white"
         >
           <MessageCircle className="size-5" />
