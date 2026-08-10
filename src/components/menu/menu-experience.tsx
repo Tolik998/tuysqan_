@@ -126,25 +126,25 @@ function ProductCard({
               "Состав уточняйте у администратора."}
           </p>
         </button>
-        <div className="mt-auto flex items-end justify-between gap-2 pt-4">
+        <div className="mt-auto flex flex-wrap items-end justify-between gap-2 pt-4">
           <strong className="whitespace-nowrap text-base sm:text-lg">
             {formatPrice(item.price)}
           </strong>
           {line ? (
-            <div className="inline-flex items-center rounded-md border border-[#020D13]/15">
+            <div className="ml-auto inline-flex max-w-full items-center rounded-md border border-[#020D13]/15">
               <button
                 onClick={() => useCartStore.getState().decrease(item.id)}
-                className="grid size-10 place-items-center"
+                className="grid size-9 shrink-0 place-items-center sm:size-10"
                 aria-label="Уменьшить"
               >
                 <Minus className="size-4" />
               </button>
-              <span className="min-w-6 text-center text-sm font-bold">
+              <span className="min-w-5 text-center text-sm font-bold sm:min-w-6">
                 {line.quantity}
               </span>
               <button
                 onClick={() => add(item)}
-                className="grid size-10 place-items-center"
+                className="grid size-9 shrink-0 place-items-center sm:size-10"
                 aria-label="Увеличить"
               >
                 <Plus className="size-4" />
